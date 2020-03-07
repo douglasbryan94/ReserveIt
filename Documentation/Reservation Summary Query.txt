@@ -1,0 +1,16 @@
+SELECT
+	u.Firstname AS "First Name",
+    u.Middlename AS "Middle Name",
+    u.Lastname AS "Last Name",
+    CONCAT(h.StreetAddress, ", ", h.CityAddress) AS "Hotel Address",
+    rm.RoomNumber AS "Room Number",
+    r.CheckIn AS "Check In",
+    r.StayLength AS "Length of stay",
+    CAST((r.CheckIn + r.StayLength) AS DATE) AS "Check Out",
+    rt.Pricing AS "Cost / Night",
+    rt.Pricing * r.StayLength AS "Total Cost"
+FROM reservations r
+JOIN users u ON r.UserID = u.UserID
+JOIN rooms rm ON r.RoomID = rm.RoomID
+JOIN hotels h ON rm.HotelID = h.HotelID
+JOIN ratetypes rt ON r.RateTypeID = rt.RateTypeID
