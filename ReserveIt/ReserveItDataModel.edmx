@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ReserveItModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Hotels">
+          <Key>
+            <PropertyRef Name="HotelID" />
+          </Key>
+          <Property Name="HotelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="MaxCapacity" Type="int" Nullable="false" />
+          <Property Name="StreetAddress" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CityAddress" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="StateAddress" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CountryAddress" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="700" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -23,12 +38,12 @@
           <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
         </EntityType>
-        <Function Name="GetAllHotelsShort" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="VerifyUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ReserveItModelStoreContainer">
+          <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -41,7 +56,7 @@
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="pass" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetAllHotelsShort" ReturnType="Collection(ReserveItModel.GetAllHotelsShort_Result)" />
+          <EntitySet Name="Hotels" EntityType="ReserveItModel.Hotel" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -76,13 +91,21 @@
           <Property Type="String" Name="ZIPAddress" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Phone" Nullable="false" MaxLength="11" />
         </ComplexType>
-        <ComplexType Name="GetAllHotelsShort_Result">
-          <Property Type="Int32" Name="HotelID" Nullable="false" />
-          <Property Type="String" Name="StreetAddress" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="CityAddress" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="StateAddress" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Description" Nullable="false" MaxLength="700" />
-        </ComplexType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="HotelID" />
+          </Key>
+          <Property Name="HotelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="MaxCapacity" Type="Int32" Nullable="false" />
+          <Property Name="StreetAddress" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CityAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StateAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountryAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -109,17 +132,22 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="VerifyUserLogin" FunctionName="ReserveItModel.Store.VerifyUserLogin" />
-          <FunctionImportMapping FunctionImportName="GetAllHotelsShort" FunctionName="ReserveItModel.Store.GetAllHotelsShort">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ReserveItModel.GetAllHotelsShort_Result">
-                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
-                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
-                <ScalarProperty Name="CityAddress" ColumnName="CityAddress" />
-                <ScalarProperty Name="StateAddress" ColumnName="StateAddress" />
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="ReserveItModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotels">
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZIPAddress" ColumnName="ZIPAddress" />
+                <ScalarProperty Name="CountryAddress" ColumnName="CountryAddress" />
+                <ScalarProperty Name="StateAddress" ColumnName="StateAddress" />
+                <ScalarProperty Name="CityAddress" ColumnName="CityAddress" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="MaxCapacity" ColumnName="MaxCapacity" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

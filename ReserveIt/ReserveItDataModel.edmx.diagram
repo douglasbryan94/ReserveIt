@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="75889b6b1b164250be331b40cdf255aa" Name="Diagram1">
         <EntityTypeShape EntityType="ReserveItModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ReserveItModel.Hotel" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

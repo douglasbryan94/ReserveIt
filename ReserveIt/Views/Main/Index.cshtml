@@ -1,27 +1,28 @@
-﻿@model bool
-
-@{
+﻿@{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 
+    List<ReserveIt.Models.DTO.HotelShort> hotels = new List<ReserveIt.Models.DTO.HotelShort>();
+
     using (ReserveItEntities ent = new ReserveItEntities())
     {
-        TempData["Hotels"] = ent.GetAllHotelsShort();
+        hotels = ent.Hotels.Select(x => new ReserveIt.Models.DTO.HotelShort()
+        {
+            HotelID = x.HotelID,
+            StreetAddress = x.StreetAddress,
+            CityAddress = x.CityAddress,
+            StateAddress = x.StateAddress,
+            Description = x.Description
+        }).ToList();
     }
-    TempData.Keep();
-}
 
-@if (Model == true)
-{
-    <script>
-        alert("Booking was completed");
-    </script>
+    int i = 0;
 }
 
 <body>
     <br />
     <div class="row">
-        @foreach (GetAllHotelsShort_Result hotel in (System.Data.Entity.Core.Objects.ObjectResult<GetAllHotelsShort_Result>)TempData["Hotels"])
+        @foreach (ReserveIt.Models.DTO.HotelShort hotel in hotels)
         {
             using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Get))
             {

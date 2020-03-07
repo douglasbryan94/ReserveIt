@@ -28,6 +28,7 @@ namespace ReserveIt
         }
     
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
     
         public virtual ObjectResult<User> VerifyUserLogin(string email, string pass)
         {
@@ -53,11 +54,6 @@ namespace ReserveIt
                 new ObjectParameter("pass", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("VerifyUserLogin", mergeOption, emailParameter, passParameter);
-        }
-    
-        public virtual ObjectResult<GetAllHotelsShort_Result> GetAllHotelsShort()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllHotelsShort_Result>("GetAllHotelsShort");
         }
     }
 }
