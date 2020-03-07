@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home";
-    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
 
     List<ReserveIt.Models.DTO.HotelShort> hotels = new List<ReserveIt.Models.DTO.HotelShort>();
 
@@ -15,8 +15,6 @@
             Description = x.Description
         }).ToList();
     }
-
-    int i = 0;
 }
 
 <body>
