@@ -23,6 +23,7 @@
           <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
         </EntityType>
+        <Function Name="GetAllHotelsShort" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="VerifyUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
@@ -40,6 +41,7 @@
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="pass" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetAllHotelsShort" ReturnType="Collection(ReserveItModel.GetAllHotelsShort_Result)" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -74,6 +76,13 @@
           <Property Type="String" Name="ZIPAddress" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Phone" Nullable="false" MaxLength="11" />
         </ComplexType>
+        <ComplexType Name="GetAllHotelsShort_Result">
+          <Property Type="Int32" Name="HotelID" Nullable="false" />
+          <Property Type="String" Name="StreetAddress" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="CityAddress" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="StateAddress" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="700" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -100,6 +109,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="VerifyUserLogin" FunctionName="ReserveItModel.Store.VerifyUserLogin" />
+          <FunctionImportMapping FunctionImportName="GetAllHotelsShort" FunctionName="ReserveItModel.Store.GetAllHotelsShort">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReserveItModel.GetAllHotelsShort_Result">
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="CityAddress" ColumnName="CityAddress" />
+                <ScalarProperty Name="StateAddress" ColumnName="StateAddress" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

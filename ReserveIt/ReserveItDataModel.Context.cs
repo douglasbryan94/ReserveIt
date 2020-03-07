@@ -54,5 +54,10 @@ namespace ReserveIt
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("VerifyUserLogin", mergeOption, emailParameter, passParameter);
         }
+    
+        public virtual ObjectResult<GetAllHotelsShort_Result> GetAllHotelsShort()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllHotelsShort_Result>("GetAllHotelsShort");
+        }
     }
 }

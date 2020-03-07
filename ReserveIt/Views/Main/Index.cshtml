@@ -1,0 +1,38 @@
+﻿@model bool
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+
+    using (ReserveItEntities ent = new ReserveItEntities())
+    {
+        TempData["Hotels"] = ent.GetAllHotelsShort();
+    }
+    TempData.Keep();
+}
+
+@if (Model == true)
+{
+    <script>
+        alert("Booking was completed");
+    </script>
+}
+
+<body>
+    <br />
+    <div class="row">
+        @foreach (GetAllHotelsShort_Result hotel in (System.Data.Entity.Core.Objects.ObjectResult<GetAllHotelsShort_Result>)TempData["Hotels"])
+        {
+            using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Get))
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@(hotel.StreetAddress + ", " + hotel.CityAddress + ", " + hotel.StateAddress)</h5>
+                        <p class="card-text">@hotel.Description</p>
+                        <button name="hotelReserve" class="btn btn-secondary" type="submit" value=@hotel.HotelID>Reserve</button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</body>
