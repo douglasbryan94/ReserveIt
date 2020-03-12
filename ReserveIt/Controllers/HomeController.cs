@@ -16,9 +16,9 @@ namespace ReserveIt.Controllers
 
         public ActionResult Login(string email, string password)
         {
-            using (ReserveItEntities ent = new ReserveItEntities())
+            using (Models.ReserveItEntities ent = new Models.ReserveItEntities())
             {
-                User result = ent.VerifyUserLogin(email, password).FirstOrDefault();
+                Models.User result = ent.VerifyUserLogin(email, password).FirstOrDefault();
 
                 if (result != null)
                 {
