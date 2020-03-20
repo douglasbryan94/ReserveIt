@@ -19,16 +19,22 @@
                     @Html.ActionLink("Home", "Index", "Main", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("My Account", "MyAccount", "Main", null, new { @class = "nav-link" })
+                    @Html.ActionLink("My Account", "Details", "Accounts", new { id = "douglas.bryan94@gmail.com" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="reservations.php">Reservations</a>
                 </li>
             </ul>
-            @using (Html.BeginForm("Logout", "Main", FormMethod.Post))
-            {
-                <button name="Logout" class="btn btn-default navbar-btn" value="Logout" type="submit">Logout</button>
-            }
+            <div class="form-inline my-2 my-lg-0">
+                @if (Session["email"] == null)
+                {
+                    @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
+                }
+                else
+                {
+                    @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
+                }
+            </div>
         </div>
     </nav>
 

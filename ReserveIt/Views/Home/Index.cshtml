@@ -1,49 +1,37 @@
-﻿
-@{
-    Layout = null;
-    ViewBag.Title = "Login";
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+    List<ReserveIt.Models.DTO.HotelShort> hotels = new List<ReserveIt.Models.DTO.HotelShort>();
+
+    using (ReserveIt.Models.ReserveItEntities ent = new ReserveIt.Models.ReserveItEntities())
+    {
+        hotels = ent.Hotels.Select(x => new ReserveIt.Models.DTO.HotelShort()
+        {
+            HotelID = x.HotelID,
+            StreetAddress = x.StreetAddress,
+            CityAddress = x.CityAddress,
+            StateAddress = x.StateAddress,
+            Description = x.Description
+        }).ToList();
+    }
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <title>ReserveIt | @ViewBag.Title</title>
-</head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">ReserveIt</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.php">Home</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
     <br />
-    <div class="d-flex justify-content-center">
-        <div class="login-form">
-            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    <div class="row" style="margin-left: 0px; margin-right: 0px;">
+        @foreach (ReserveIt.Models.DTO.HotelShort hotel in hotels)
+        {
+            using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Get))
             {
-                <h2 class="text-center">Log in</h2>
-                <div class="form-group">
-                    <input name="email" type="email" class="form-control" placeholder="Email Address" required="required">
-                </div>
-                <div class="form-group">
-                    <input name="password" type="password" class="form-control" placeholder="Password" required="required">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@(hotel.StreetAddress + ", " + hotel.CityAddress + ", " + hotel.StateAddress)</h5>
+                        <p class="card-text">@hotel.Description</p>
+                        <button name="hotelReserve" class="btn btn-secondary" type="submit" value=@hotel.HotelID>Reserve</button>
+                    </div>
                 </div>
             }
-            <p class="text-center">@Html.ActionLink("Create an Account", "Create", "Accounts")</p>
-        </div>
+        }
     </div>
 </body>
-</html>
