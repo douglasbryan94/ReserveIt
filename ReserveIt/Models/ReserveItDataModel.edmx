@@ -20,6 +20,14 @@
           <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="700" Nullable="false" />
         </EntityType>
+        <EntityType Name="RoomTypes">
+          <Key>
+            <PropertyRef Name="RoomTypeID" />
+          </Key>
+          <Property Name="RoomTypeID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="RoomTypeDescription" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="MaxOccupancy" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -36,14 +44,20 @@
           <Property Name="StateAddress" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="CountryAddress" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="14" Nullable="false" />
         </EntityType>
+        <Function Name="GetAvailableRoomTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotelId" Type="int" Mode="In" />
+          <Parameter Name="checkIn" Type="date" Mode="In" />
+          <Parameter Name="checkOut" Type="date" Mode="In" />
+        </Function>
         <Function Name="VerifyUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="pass" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ReserveItModelStoreContainer">
           <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomTypes" EntityType="Self.RoomTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -56,6 +70,12 @@
           <FunctionImport Name="VerifyUserLogin" EntitySet="Users" ReturnType="Collection(ReserveItModel.User)">
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="pass" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="RoomTypes" EntityType="ReserveItModel.RoomType" />
+          <FunctionImport Name="GetAvailableRoomTypes" EntitySet="RoomTypes" ReturnType="Collection(ReserveItModel.RoomType)">
+            <Parameter Name="hotelId" Mode="In" Type="Int32" />
+            <Parameter Name="checkIn" Mode="In" Type="DateTime" />
+            <Parameter Name="checkOut" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Hotel">
@@ -89,7 +109,15 @@
           <Property Name="StateAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CountryAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RoomType">
+          <Key>
+            <PropertyRef Name="RoomTypeID" />
+          </Key>
+          <Property Name="RoomTypeID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="RoomTypeDescription" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MaxOccupancy" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -133,6 +161,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="VerifyUserLogin" FunctionName="ReserveItModel.Store.VerifyUserLogin">
+          </FunctionImportMapping>
+          <EntitySetMapping Name="RoomTypes">
+            <EntityTypeMapping TypeName="ReserveItModel.RoomType">
+              <MappingFragment StoreEntitySet="RoomTypes">
+                <ScalarProperty Name="MaxOccupancy" ColumnName="MaxOccupancy" />
+                <ScalarProperty Name="RoomTypeDescription" ColumnName="RoomTypeDescription" />
+                <ScalarProperty Name="RoomTypeID" ColumnName="RoomTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAvailableRoomTypes" FunctionName="ReserveItModel.Store.GetAvailableRoomTypes">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

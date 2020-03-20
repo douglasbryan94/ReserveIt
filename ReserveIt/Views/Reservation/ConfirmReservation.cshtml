@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Confirm Reservation";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<body>
+    <div class="jumbotron">
+        <h1 class="display-4">Confirm your Booking</h1>
+        <p class="lead">Please review your booking to ensure all details are accurate</p>
+        <hr class="my-4">
+        <p>
+            Hotel Address: @(TempData["hotelStreetAddress"] + ", " + TempData["hotelCityAddress"] + ", " + TempData["hotelStateAddress"])
+            <br />
+            Check In Date: @(TempData["checkIn"])
+            <br />
+            Check Out Date: @(TempData["checkOut"])
+            <br />
+            Number of nights: @(TempData["lengthOfStay"])
+        </p>
+        <div class="row">
+            @using (Html.BeginForm("SubmitReservation", "Reservation", FormMethod.Post))
+            {
+                <button class="btn btn-success">Confirm</button>
+            }
+            @using (Html.BeginForm("CancelReservation", "Reservation", FormMethod.Post))
+            {
+                <button class="btn btn-danger">Cancel</button>
+            }
+        </div>
+    </div>
+</body>

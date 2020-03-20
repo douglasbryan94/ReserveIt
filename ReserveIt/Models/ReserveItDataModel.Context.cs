@@ -29,6 +29,7 @@ namespace ReserveIt.Models
     
         public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
     
         public virtual ObjectResult<User> VerifyUserLogin(string email, string pass)
         {
@@ -54,6 +55,40 @@ namespace ReserveIt.Models
                 new ObjectParameter("pass", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("VerifyUserLogin", mergeOption, emailParameter, passParameter);
+        }
+    
+        public virtual ObjectResult<RoomType> GetAvailableRoomTypes(Nullable<int> hotelId, Nullable<System.DateTime> checkIn, Nullable<System.DateTime> checkOut)
+        {
+            var hotelIdParameter = hotelId.HasValue ?
+                new ObjectParameter("hotelId", hotelId) :
+                new ObjectParameter("hotelId", typeof(int));
+    
+            var checkInParameter = checkIn.HasValue ?
+                new ObjectParameter("checkIn", checkIn) :
+                new ObjectParameter("checkIn", typeof(System.DateTime));
+    
+            var checkOutParameter = checkOut.HasValue ?
+                new ObjectParameter("checkOut", checkOut) :
+                new ObjectParameter("checkOut", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RoomType>("GetAvailableRoomTypes", hotelIdParameter, checkInParameter, checkOutParameter);
+        }
+    
+        public virtual ObjectResult<RoomType> GetAvailableRoomTypes(Nullable<int> hotelId, Nullable<System.DateTime> checkIn, Nullable<System.DateTime> checkOut, MergeOption mergeOption)
+        {
+            var hotelIdParameter = hotelId.HasValue ?
+                new ObjectParameter("hotelId", hotelId) :
+                new ObjectParameter("hotelId", typeof(int));
+    
+            var checkInParameter = checkIn.HasValue ?
+                new ObjectParameter("checkIn", checkIn) :
+                new ObjectParameter("checkIn", typeof(System.DateTime));
+    
+            var checkOutParameter = checkOut.HasValue ?
+                new ObjectParameter("checkOut", checkOut) :
+                new ObjectParameter("checkOut", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RoomType>("GetAvailableRoomTypes", mergeOption, hotelIdParameter, checkInParameter, checkOutParameter);
         }
     }
 }

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "GetDateAndTime";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<script type="text/javascript">
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("checkIn").setAttribute("min", today);
+
+    function checkInChosen(e) {
+        Date.prototype.yyyymmdd = function () {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                "-",
+            (mm > 9 ? '' : '0') + mm,
+                "-",
+            (dd > 9 ? '' : '0') + dd
+            ].join('');
+        };
+
+        var CheckInDate = document.forms["reservationForm"]["CheckInDate"].value;
+        var date = new Date(CheckInDate);
+
+        date.setDate(date.getDate() + 2);
+        document.getElementById("checkOut").min = date.yyyymmdd();
+    }
+</script>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <h1 class="display-4">Hotel Details - @(TempData["hotelStreetAddress"] + ", " + TempData["hotelCityAddress"])</h1>
+    </div>
+    @using (Html.BeginForm("SelectRoomType", "Reservation", FormMethod.Post, new { name = "reservationForm" }))
+    {
+        <input type="date" id="checkIn" name="CheckInDate" onchange="checkInChosen(event);"><br>
+        <input type="date" id="checkOut" name="CheckOutDate"><br>
+        <input type="submit" name="submit" value="Search">
+    }
+</body>
