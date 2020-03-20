@@ -1,0 +1,115 @@
+﻿@model ReserveIt.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Middlename)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Middlename)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StreetAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StreetAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StateAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StateAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZIPAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZIPAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

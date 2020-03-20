@@ -28,6 +28,7 @@ namespace ReserveIt.Controllers
 
                 if (result != null)
                 {
+                    Session["userID"] = result.UserID;
                     Session["email"] = result.Email;
                     Session["password"] = result.Password;
                     Session["accessLevel"] = result.UserLevel;

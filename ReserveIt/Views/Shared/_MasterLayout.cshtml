@@ -18,9 +18,12 @@
                 <li class="nav-item active">
                     @Html.ActionLink("Home", "Index", "Main", null, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item">
-                    @Html.ActionLink("My Account", "Details", "Accounts", new { id = "douglas.bryan94@gmail.com" }, new { @class = "nav-link" })
-                </li>
+                @if (Session["email"] != null)
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("My Account", "Details", "Accounts", new { id = Session["userID"] }, new { @class = "nav-link" })
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link" href="reservations.php">Reservations</a>
                 </li>

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "DetailsUser";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+
+    string[] phoneSegments = ((string)Session["phone"]).Split('-');
+}
+
+<body>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <td style="padding-left: 50px;">
+                <div class="container">
+                    <div class="panel panel-default">
+                        <h2>Personal Information</h2>
+                        <div class="panel-body">Name: @(Session["firstName"] + " " + Session["middleName"] + " " + Session["lastName"])</div>
+                        <div class="panel-body">
+                            Address:
+                            @(Session["streetAddress"] + ", " +
+                            Session["cityAddress"] + ", " +
+                            Session["stateAddress"] + ", " +
+                            Session["countryAddress"] + ", " +
+                            Session["zipAddress"])
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td style="padding-left: 50px;">
+                @using (Html.BeginForm("ModifyPersonal", "AccountManagement", FormMethod.Post))
+                {
+                    <button class="btn btn-warning">Edit</button>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left: 50px; padding-top: 50px;">
+                <div class="container">
+                    <h2>Contact Information</h2>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            Phone:
+                            @(phoneSegments[0] + " (" + phoneSegments[1] + ")-" + phoneSegments[2] + "-" + phoneSegments[3])
+                        </div>
+                        <div class="panel-body">Email: @Session["email"]</div>
+                    </div>
+                </div>
+            </td>
+            <td style="padding-left: 50px; padding-top: 50px;">
+                @using (Html.BeginForm("ModifyContact", "AccountManagement", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-warning">Edit</button>
+                }
+            </td>
+        </tr>
+        </div>
+    </table>
+    <br>
+    <br>
+    <br>
+</body>
