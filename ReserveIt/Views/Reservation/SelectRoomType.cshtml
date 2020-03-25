@@ -10,7 +10,7 @@
 
         using (ReserveIt.Models.ReserveItEntities db = new ReserveIt.Models.ReserveItEntities())
         {
-            availableRoomTypes = db.GetAvailableRoomTypes((int)TempData["hotelID"], DateTime.Parse((string)TempData["checkIn"]), DateTime.Parse((string)TempData["checkOut"])).ToList();
+            availableRoomTypes = db.GetAvailableRoomTypes((int)TempData["hotelID"], (DateTime)TempData["checkIn"], (DateTime)TempData["checkOut"]).ToList();
         }
     }
 

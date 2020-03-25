@@ -20,6 +20,18 @@
           <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="700" Nullable="false" />
         </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="ReservationID" />
+          </Key>
+          <Property Name="ReservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="RoomID" Type="int" />
+          <Property Name="CheckIn" Type="date" Nullable="false" />
+          <Property Name="StayLength" Type="int" Nullable="false" />
+          <Property Name="NightlyRate" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="DiscountID" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="RoomTypes">
           <Key>
             <PropertyRef Name="RoomTypeID" />
@@ -46,6 +58,24 @@
           <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="14" Nullable="false" />
         </EntityType>
+        <Association Name="FK_UserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAvailableRoomID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotelId" Type="int" Mode="In" />
+          <Parameter Name="checkIn" Type="date" Mode="In" />
+          <Parameter Name="checkOut" Type="date" Mode="In" />
+          <Parameter Name="roomTypeId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetAvailableRoomTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="hotelId" Type="int" Mode="In" />
           <Parameter Name="checkIn" Type="date" Mode="In" />
@@ -57,8 +87,13 @@
         </Function>
         <EntityContainer Name="ReserveItModelStoreContainer">
           <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomTypes" EntityType="Self.RoomTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserID" Association="Self.FK_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -77,6 +112,17 @@
             <Parameter Name="checkIn" Mode="In" Type="DateTime" />
             <Parameter Name="checkOut" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="GetAvailableRoomID" ReturnType="Collection(Int32)">
+            <Parameter Name="hotelId" Mode="In" Type="Int32" />
+            <Parameter Name="checkIn" Mode="In" Type="DateTime" />
+            <Parameter Name="checkOut" Mode="In" Type="DateTime" />
+            <Parameter Name="roomTypeId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Reservations" EntityType="ReserveItModel.Reservation" />
+          <AssociationSet Name="FK_UserID" Association="ReserveItModel.FK_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Hotel">
           <Key>
@@ -110,6 +156,7 @@
           <Property Name="CountryAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Reservations" Relationship="ReserveItModel.FK_UserID" FromRole="User" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -119,6 +166,31 @@
           <Property Name="RoomTypeDescription" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="MaxOccupancy" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationID" />
+          </Key>
+          <Property Name="ReservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="CheckIn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StayLength" Type="Int32" Nullable="false" />
+          <Property Name="NightlyRate" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="DiscountID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="ReserveItModel.FK_UserID" FromRole="Reservation" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserID">
+          <End Type="ReserveItModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ReserveItModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -173,6 +245,20 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetAvailableRoomTypes" FunctionName="ReserveItModel.Store.GetAvailableRoomTypes">
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAvailableRoomID" FunctionName="ReserveItModel.Store.GetAvailableRoomID" />
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="ReserveItModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+                <ScalarProperty Name="NightlyRate" ColumnName="NightlyRate" />
+                <ScalarProperty Name="StayLength" ColumnName="StayLength" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -39,8 +39,8 @@ namespace ReserveIt.Controllers
             {
                 if (CheckInDate != null && CheckOutDate != null)
                 {
-                    TempData["checkIn"] = CheckInDate.ToShortDateString();
-                    TempData["checkOut"] = CheckOutDate.ToShortDateString();
+                    TempData["checkIn"] = CheckInDate;
+                    TempData["checkOut"] = CheckOutDate;
                     TempData["lengthOfStay"] = (CheckOutDate - CheckInDate).Days;
 
                     TempData.Keep();
@@ -49,14 +49,17 @@ namespace ReserveIt.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Main");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ConfirmReservation(string roomType)
         {
             if (Session["userID"] != null)
             {
-                //TempData["roomID"] = Util.SQLConnection.GetAvailableRoomID(TempData, roomType);
+                using (Models.ReserveItEntities db = new Models.ReserveItEntities())
+                {
+                    TempData["roomID"] = db.GetAvailableRoomID((int)TempData["hotelID"], (DateTime)TempData["checkIn"], (DateTime)TempData["checkOut"], roomType).First();
+                }
 
                 TempData.Keep();
 
@@ -70,6 +73,17 @@ namespace ReserveIt.Controllers
         {
             if (Session["userID"] != null)
             {
+                using (Models.ReserveItEntities db = new Models.ReserveItEntities())
+                {
+                    db.Reservations.Add(new Models.Reservation()
+                    {
+                        UserID = (int)Session["userId"],
+                        RoomID = (int)TempData["roomID"],
+                        CheckIn = (DateTime)TempData["checkIn"],
+                        StayLength = (int)TempData["lengthOfStay"]
+                    });
+                    db.SaveChanges();
+                }
                 // Util.SQLConnection.SubmitReservation(TempData);
                 return RedirectToAction("Index", "Main", new { redirectedFromBooking = true });
             }
