@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>ReserveIt | @ViewBag.Title</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">ReserveIt</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    @Html.ActionLink("Users", "UserView", "Admin", null, new { @class = "nav-link" })
+                </li>
+                @if (Session["email"] != null)
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("My Account", "Details", "Accounts", new { id = Session["userID"] }, new { @class = "nav-link" })
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link" href="reservations.php">Reservations</a>
+                </li>
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+                @if (Session["email"] == null)
+                {
+                    @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
+                }
+                else
+                {
+                    @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
+                }
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+</body>
+</html>
