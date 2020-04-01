@@ -36,8 +36,17 @@ namespace ReserveIt.Controllers
             }
             else
             {
-                return View(user);
+                if ((int)Session["accessLevel"] == 1)
+                {
+                    return View(user);
+                }
+                else if ((int)Session["accessLevel"] == 2)
+                {
+                    return View("DetailsUser", user);
+                }
             }
+
+            return null;
         }
 
         // GET: Accounts/Create

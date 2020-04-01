@@ -302,14 +302,14 @@
     <Content Include="Views\Accounts\Delete.cshtml" />
     <Content Include="Views\Accounts\Details.cshtml" />
     <Content Include="Views\Accounts\Edit.cshtml" />
-    <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Accounts\AccountsList.cshtml" />
     <Content Include="Views\Accounts\DetailsUser.cshtml" />
     <Content Include="Views\Reservation\GetDateAndTime.cshtml" />
     <Content Include="Views\Reservation\ConfirmReservation.cshtml" />
     <Content Include="Views\Reservation\SelectRoomType.cshtml" />
     <Content Include="Views\Shared\_AdminMasterLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\UserView.cshtml" />
+    <Content Include="Views\Admin\Main.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

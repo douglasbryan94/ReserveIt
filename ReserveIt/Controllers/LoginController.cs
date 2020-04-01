@@ -71,7 +71,7 @@ namespace ReserveIt.Controllers
                         Session["zipAddress"] = result.ZIPAddress;
                         Session["phone"] = result.Phone;*/
 
-                        return RedirectToAction("UserView", "Admin");
+                        return RedirectToAction("Main", "Admin");
                     }
                 }
             }

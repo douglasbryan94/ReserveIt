@@ -14,12 +14,11 @@ namespace ReserveIt.Controllers
             return View();
         }
 
-        public ActionResult UserView()
+        public ActionResult Main()
         {
-            using (Models.ReserveItEntities db = new Models.ReserveItEntities())
-            {
-                return View(db.Users.ToList());
-            }
+            return View();
         }
+
+        
     }
 }
