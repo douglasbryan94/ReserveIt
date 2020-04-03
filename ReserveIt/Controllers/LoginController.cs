@@ -63,15 +63,9 @@ namespace ReserveIt.Controllers
                         Session["accessLevel"] = result.UserLevel;
                         /*Session["firstName"] = result.Firstname;
                         Session["middleName"] = result.Middlename;
-                        Session["lastName"] = result.Lastname;
-                        Session["streetAddress"] = result.StreetAddress;
-                        Session["cityAddress"] = result.CityAddress;
-                        Session["stateAddress"] = result.StateAddress;
-                        Session["countryAddress"] = result.CountryAddress;
-                        Session["zipAddress"] = result.ZIPAddress;
-                        Session["phone"] = result.Phone;*/
+                        Session["lastName"] = result.Lastname;*/
 
-                        return RedirectToAction("Main", "Admin");
+                        return RedirectToAction("UserManagement", "Admin");
                     }
                 }
             }
@@ -84,6 +78,12 @@ namespace ReserveIt.Controllers
             Session.Clear();
 
             return RedirectToAction("Index", "Home");
+        }
+        public ActionResult AdminLogout()
+        {
+            Session.Clear();
+
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

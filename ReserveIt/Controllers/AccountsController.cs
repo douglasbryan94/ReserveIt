@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using ReserveIt.Models;
@@ -18,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.Users.Where(x => x.UserLevel == 2).ToList());
         }
 
         // GET: Accounts/Details/5
@@ -28,25 +27,12 @@ namespace ReserveIt.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            else
-            {
-                if ((int)Session["accessLevel"] == 1)
-                {
-                    return View(user);
-                }
-                else if ((int)Session["accessLevel"] == 2)
-                {
-                    return View("DetailsUser", user);
-                }
-            }
-
-            return null;
+            return View(user);
         }
 
         // GET: Accounts/Create
@@ -60,12 +46,12 @@ namespace ReserveIt.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,Email,Password,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
+        public ActionResult Create([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
             if (ModelState.IsValid)
             {
                 user.UserLevel = 2;
-                user.Password = Convert.ToBase64String(Encoding.UTF8.GetBytes(user.Password));
+                user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -100,7 +86,7 @@ namespace ReserveIt.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("UserManagement", "Admin");
             }
             return View(user);
         }

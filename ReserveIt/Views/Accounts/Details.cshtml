@@ -1,54 +1,120 @@
-﻿@model IEnumerable<ReserveIt.Models.User>
+﻿@model ReserveIt.Models.User
 
 @{
-    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-<body>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Firstname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Middlename)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lastname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th></th>
-        </tr>
+<!DOCTYPE html>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Middlename)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lastname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td style="white-space: nowrap">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
-                </td>
-            </tr>
-        }
-    </table>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserLevel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserLevel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Firstname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Middlename)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Middlename)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Lastname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StreetAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StreetAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CityAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CityAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StateAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StateAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CountryAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ZIPAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ZIPAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </body>
+</html>

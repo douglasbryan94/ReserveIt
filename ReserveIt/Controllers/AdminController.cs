@@ -14,11 +14,9 @@ namespace ReserveIt.Controllers
             return View();
         }
 
-        public ActionResult Main()
+        public ActionResult UserManagement()
         {
             return View();
         }
-
-        
     }
 }

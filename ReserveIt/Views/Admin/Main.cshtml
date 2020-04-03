@@ -1,7 +1,0 @@
-﻿
-@{
-    ViewBag.Title = "Main";
-    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
-}
-
-@Html.Partial("~/Views/Accounts/AccountsList.cshtml", new ReserveIt.Models.ReserveItEntities().Users.ToList());

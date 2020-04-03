@@ -16,27 +16,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    @Html.ActionLink("Users", "Main", "Admin", null, new { @class = "nav-link" })
-                </li>
-                @if (Session["email"] != null)
-                {
-                    <li class="nav-item">
-                        @Html.ActionLink("My Account", "Details", "Accounts", new { id = Session["userID"] }, new { @class = "nav-link" })
-                    </li>
-                }
-                <li class="nav-item">
-                    <a class="nav-link" href="reservations.php">Reservations</a>
+                    @Html.ActionLink("Users", "UserManagement", "Admin", null, new { @class = "nav-link" })
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">
-                @if (Session["email"] == null)
-                {
-                    @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
-                }
-                else
-                {
-                    @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" });
-                }
+                @Html.ActionLink("Logout", "AdminLogout", "Login", null, new { @class = "btn btn-outline-success my-2 my-sm-0" })
             </div>
         </div>
     </nav>
