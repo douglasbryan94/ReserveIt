@@ -18,5 +18,24 @@ namespace ReserveIt.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ReservationManagement()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ReservationManagement(DateTime startDate, DateTime endDate)
+        {
+            Models.AdminReservationSearchData data = new Models.AdminReservationSearchData(startDate, endDate);
+
+            return View(data);
+        }
+
+        public ActionResult HotelManagement()
+        {
+            return View();
+        }
     }
 }

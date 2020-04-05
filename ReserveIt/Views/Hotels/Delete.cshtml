@@ -1,0 +1,104 @@
+﻿@model ReserveIt.Models.Hotel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Hotel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ManagerID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ManagerID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MaxCapacity)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MaxCapacity)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.StreetAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.StreetAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CityAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CityAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.StateAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.StateAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CountryAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ZIPAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ZIPAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

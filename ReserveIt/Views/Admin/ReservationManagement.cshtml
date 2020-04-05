@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ReservationManagement";
+    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
+    @model ReserveIt.Models.AdminReservationSearchData
+}
+
+<script type="text/javascript">
+    function checkInChosen(e) {
+        Date.prototype.yyyymmdd = function () {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                "-",
+            (mm > 9 ? '' : '0') + mm,
+                "-",
+            (dd > 9 ? '' : '0') + dd
+            ].join('');
+        };
+
+        var CheckInDate = document.forms["reservationSearchForm"]["CheckInDate"].value;
+        var date = new Date(CheckInDate);
+
+        date.setDate(date.getDate() + 2);
+        document.getElementById("checkOut").min = date.yyyymmdd();
+    }
+</script>
+
+<body>
+    <div class="row" style="margin-left: 0px; margin-right: 0px;">
+        @using (Html.BeginForm("ReservationManagement", "Admin", FormMethod.Post, new { name = "reservationSearchForm" }))
+        {
+            <input type="date" id="startDate" name="startDate" onchange="checkInChosen(event);" required>
+            <input type="date" id="endDate" name="endDate" required>
+            <input type="submit" name="submit" value="Search">
+        }
+    </div>
+
+    <br />
+    @if (Model == null)
+    {
+        @Html.Action("Index", "Reservations")
+    }
+    else
+    {
+        @Html.Action("Index", "Reservations", new { data = Model })
+    }
+</body>
