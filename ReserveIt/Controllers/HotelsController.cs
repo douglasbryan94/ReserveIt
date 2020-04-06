@@ -17,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Hotels
         public ActionResult Index()
         {
-            return View(db.Hotels.ToList());
+            return View(db.Hotels.Include(x => x.Manager).ToList());
         }
 
         // GET: Hotels/Details/5

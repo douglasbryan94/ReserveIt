@@ -247,12 +247,16 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminReservationSearchData.cs" />
     <Compile Include="Models\DTO\HotelShort.cs" />
     <Compile Include="Models\Hotel.cs">
+      <DependentUpon>ReserveItDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Manager.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Reservation.cs">
@@ -272,6 +276,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReserveItDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Room.cs">
+      <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoomType.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
@@ -325,6 +332,10 @@
     <Content Include="Views\Hotels\Details.cshtml" />
     <Content Include="Views\Hotels\Edit.cshtml" />
     <Content Include="Views\Hotels\Index.cshtml" />
+    <Content Include="Views\Rooms\Create.cshtml" />
+    <Content Include="Views\Rooms\Delete.cshtml" />
+    <Content Include="Views\Rooms\Edit.cshtml" />
+    <Content Include="Views\Rooms\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

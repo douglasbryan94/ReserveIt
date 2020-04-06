@@ -14,6 +14,12 @@ namespace ReserveIt.Models
     
     public partial class Hotel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Hotel()
+        {
+            this.Rooms = new HashSet<Room>();
+        }
+    
         public int HotelID { get; set; }
         public Nullable<int> ManagerID { get; set; }
         public int MaxCapacity { get; set; }
@@ -24,5 +30,9 @@ namespace ReserveIt.Models
         public string ZIPAddress { get; set; }
         public string Phone { get; set; }
         public string Description { get; set; }
+    
+        public virtual Manager Manager { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

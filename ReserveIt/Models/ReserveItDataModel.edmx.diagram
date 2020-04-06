@@ -10,6 +10,12 @@
         <EntityTypeShape EntityType="ReserveItModel.RoomType" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="ReserveItModel.Reservation" Width="1.5" PointX="5.5" PointY="2.875" />
         <AssociationConnector Association="ReserveItModel.FK_UserID" />
+        <EntityTypeShape EntityType="ReserveItModel.Manager" Width="1.5" PointX="0.75" PointY="5.375" />
+        <AssociationConnector Association="ReserveItModel.FK_ManagerID" />
+        <EntityTypeShape EntityType="ReserveItModel.Room" Width="1.5" PointX="8.625" PointY="1.125" />
+        <AssociationConnector Association="ReserveItModel.FK_HotelID" />
+        <AssociationConnector Association="ReserveItModel.FK_RoomID" />
+        <AssociationConnector Association="ReserveItModel.FK_RoomTypeID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

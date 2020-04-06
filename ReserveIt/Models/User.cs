@@ -11,8 +11,7 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,46 +19,21 @@ namespace ReserveIt.Models
         {
             this.Reservations = new HashSet<Reservation>();
         }
-
+    
         public int UserID { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid Email Address")]
-        [RegularExpression(@"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])",
-            ErrorMessage = "Please enter a valid Email Address")]
         public string Email { get; set; }
         public string Password { get; set; }
         public int UserLevel { get; set; }
-        
-        [Required(ErrorMessage = "Please enter a valid First Name")] 
-        [RegularExpression("^[A-z]+$", ErrorMessage = "Please enter a valid First Name")]
         public string Firstname { get; set; }
-        
-        [RegularExpression("^[A-z]+$", ErrorMessage = "Please enter a valid Middle Name")]
         public string Middlename { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid Last Name")]
-        [RegularExpression("^[A-z]+$", ErrorMessage = "Please enter a valid Last Name")]
         public string Lastname { get; set; }
-        
-        [Required(ErrorMessage = "Please enter a valid Street Address")] 
         public string StreetAddress { get; set; }
-        
-        [Required(ErrorMessage = "Please enter a valid City Address")] 
         public string CityAddress { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid State Address")]
         public string StateAddress { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid Country Address")]
         public string CountryAddress { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid ZIP Address")]
         public string ZIPAddress { get; set; }
-
-        [Required(ErrorMessage = "Please enter a valid phone number")]
-        [RegularExpression("^[1-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]$", ErrorMessage = "Please enter a valid phone number")]
         public string Phone { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservations { get; set; }
     }

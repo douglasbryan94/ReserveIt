@@ -23,5 +23,6 @@ namespace ReserveIt.Models
         public string DiscountID { get; set; }
     
         public virtual User User { get; set; }
+        public virtual Room Room { get; set; }
     }
 }
