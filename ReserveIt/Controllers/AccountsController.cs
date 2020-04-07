@@ -17,28 +17,43 @@ namespace ReserveIt.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            return View(db.Users.Where(x => x.UserLevel == 2).ToList());
+            if (Session["accessLevel"] != null)
+            {
+                return View(db.Users.Where(x => x.UserLevel == 2).ToList());
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Accounts/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["accessLevel"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                User user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Accounts/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["accessLevel"] != null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Accounts/Create
@@ -48,31 +63,41 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
-            if (ModelState.IsValid)
+            if (Session["accessLevel"] != null)
             {
-                user.UserLevel = 2;
-                user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    user.UserLevel = 2;
+                    user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("UserManagement", "Admin");
+                }
+
+                return View(user);
             }
 
-            return View(user);
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Accounts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["accessLevel"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                User user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Accounts/Edit/5
@@ -82,28 +107,38 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
-            if (ModelState.IsValid)
+            if (Session["accessLevel"] != null)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("UserManagement", "Admin");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("UserManagement", "Admin");
+                }
+                return View(user);
             }
-            return View(user);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Accounts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["accessLevel"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                User user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Accounts/Delete/5
@@ -111,10 +146,15 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["accessLevel"] != null)
+            {
+                User user = db.Users.Find(id);
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)

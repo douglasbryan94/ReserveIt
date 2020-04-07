@@ -25,7 +25,8 @@ namespace ReserveIt.Controllers
         public ActionResult Create(int hotelID)
         {
             ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription");
-            return View(new Room() { HotelID = hotelID });
+            int roomNumber = db.Rooms.Where(r => r.HotelID == hotelID).Count() + 1;
+            return View(new Room() { HotelID = hotelID, RoomNumber = roomNumber });
         }
 
         // POST: Rooms/Create

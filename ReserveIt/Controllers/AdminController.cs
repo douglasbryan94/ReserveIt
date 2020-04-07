@@ -16,26 +16,45 @@ namespace ReserveIt.Controllers
 
         public ActionResult UserManagement()
         {
-            return View();
+            if (Session["accessLevel"] != null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult ReservationManagement()
         {
-            return View();
+            if (Session["accessLevel"] != null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult ReservationManagement(DateTime startDate, DateTime endDate)
         {
-            Models.AdminReservationSearchData data = new Models.AdminReservationSearchData(startDate, endDate);
+            if (Session["accessLevel"] != null)
+            {
+                Models.AdminReservationSearchData data = new Models.AdminReservationSearchData(startDate, endDate);
+                return View(data);
+            }
 
-            return View(data);
+            return RedirectToAction("Index");
         }
 
         public ActionResult HotelManagement()
         {
-            return View();
+            if (Session["accessLevel"] != null)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

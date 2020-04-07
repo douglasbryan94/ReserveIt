@@ -19,11 +19,11 @@
             ].join('');
         };
 
-        var CheckInDate = document.forms["reservationSearchForm"]["CheckInDate"].value;
+        var CheckInDate = document.forms["reservationSearchForm"]["startDate"].value;
         var date = new Date(CheckInDate);
 
         date.setDate(date.getDate() + 2);
-        document.getElementById("checkOut").min = date.yyyymmdd();
+        document.getElementById("endDate").min = date.yyyymmdd();
     }
 </script>
 
