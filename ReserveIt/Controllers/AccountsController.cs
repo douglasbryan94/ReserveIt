@@ -151,10 +151,10 @@ namespace ReserveIt.Controllers
                 User user = db.Users.Find(id);
                 db.Users.Remove(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("UserManagement", "Admin");
             }
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("UserManagement", "Admin");
         }
 
         protected override void Dispose(bool disposing)

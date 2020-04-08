@@ -2,17 +2,14 @@
 
 @{
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
+    ViewBag.Title = "User Details";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
 <body>
     <div>
+        <br />
+        <h4>User Details - @Model.Email</h4>
+        <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Email)
@@ -20,14 +17,6 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Email)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Password)
             </dd>
 
             <dt>
@@ -117,4 +106,3 @@
         @Html.ActionLink("Back to List", "UserManagement", "Admin", null, new { @class = "btn btn-secondary" })
     </p>
 </body>
-</html>

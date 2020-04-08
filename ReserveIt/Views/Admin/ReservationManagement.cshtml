@@ -28,12 +28,22 @@
 </script>
 
 <body>
-    <div class="row" style="margin-left: 0px; margin-right: 0px;">
+    <div class="row" style="margin-left: 0px; margin-right: 0px; margin-top: 10px;">
         @using (Html.BeginForm("ReservationManagement", "Admin", FormMethod.Post, new { name = "reservationSearchForm" }))
         {
-            <input type="date" id="startDate" name="startDate" onchange="checkInChosen(event);" required>
-            <input type="date" id="endDate" name="endDate" required>
-            <input type="submit" name="submit" value="Search">
+            <table>
+                <tr>
+                    <td style="padding-right: 15px;">
+                        Check In Date: <input type="date" id="startDate" name="startDate" onchange="checkInChosen(event);" required>
+                    </td>
+                    <td style="padding-right: 15px;">
+                        Check Out Date: <input type="date" id="endDate" name="endDate" required>
+                    </td>
+                    <td>
+                        <input type="submit" name="submit" value="Search" class="btn btn-success">
+                    </td>
+                </tr>
+            </table>
         }
     </div>
 

@@ -128,6 +128,7 @@ namespace ReserveIt.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Entry(reservation).State = EntityState.Modified;
+                    var item = db.Entry(reservation).Property(x => x.CheckIn);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

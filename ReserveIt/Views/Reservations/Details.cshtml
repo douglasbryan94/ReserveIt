@@ -5,46 +5,45 @@
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Reservation</h4>
+    <br />
+    <h4>Reservation Details of ID: @Model.ReservationID</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RoomID)
+            Hotel Address
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RoomID)
+            @Html.DisplayFor(model => model.Room.Hotel.StreetAddress), @Html.DisplayFor(model => model.Room.Hotel.CityAddress), @Html.DisplayFor(model => model.Room.Hotel.StateAddress)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CheckIn)
+            Check In Date
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CheckIn)
+            @Model.CheckIn.ToShortDateString()
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StayLength)
+            Length of Stay
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StayLength)
+            @Html.DisplayFor(model => model.StayLength) nights
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NightlyRate)
+            Nightly Rate
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NightlyRate)
+            $@Html.DisplayFor(model => model.NightlyRate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DiscountID)
+            Discount
         </dt>
 
         <dd>
@@ -62,6 +61,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Back to List", "ReservationManagement", "Admin", null, new { @class = "btn btn-secondary" })
 </p>
