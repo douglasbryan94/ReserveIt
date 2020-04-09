@@ -37,9 +37,9 @@
           <Property Name="UserID" Type="int" />
           <Property Name="RoomID" Type="int" />
           <Property Name="CheckIn" Type="date" Nullable="false" />
-          <Property Name="StayLength" Type="int" Nullable="false" />
+          <Property Name="StayLength" Type="int" />
+          <Property Name="CheckOut" Type="date" Nullable="false" />
           <Property Name="NightlyRate" Type="decimal" Precision="15" Scale="2" />
-          <Property Name="DiscountID" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -207,11 +207,6 @@
             <Parameter Name="checkOut" Mode="In" Type="DateTime" />
             <Parameter Name="roomTypeId" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Reservations" EntityType="ReserveItModel.Reservation" />
-          <AssociationSet Name="FK_UserID" Association="ReserveItModel.FK_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Reservation" EntitySet="Reservations" />
-          </AssociationSet>
           <EntitySet Name="Managers" EntityType="ReserveItModel.Manager" />
           <AssociationSet Name="FK_ManagerID" Association="ReserveItModel.FK_ManagerID">
             <End Role="Manager" EntitySet="Managers" />
@@ -222,15 +217,20 @@
             <End Role="Hotel" EntitySet="Hotels" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
-          <AssociationSet Name="FK_RoomID" Association="ReserveItModel.FK_RoomID">
-            <End Role="Room" EntitySet="Rooms" />
-            <End Role="Reservation" EntitySet="Reservations" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomTypeID" Association="ReserveItModel.FK_RoomTypeID">
             <End Role="RoomType" EntitySet="RoomTypes" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Reservations" EntityType="ReserveItModel.Reservation" />
+          <AssociationSet Name="FK_RoomID" Association="ReserveItModel.FK_RoomID">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserID" Association="ReserveItModel.FK_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Hotel">
           <Key>
             <PropertyRef Name="HotelID" />
@@ -276,32 +276,6 @@
           <Property Name="MaxOccupancy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Rooms" Relationship="ReserveItModel.FK_RoomTypeID" FromRole="RoomType" ToRole="Room" />
         </EntityType>
-        <EntityType Name="Reservation">
-          <Key>
-            <PropertyRef Name="ReservationID" />
-          </Key>
-          <Property Name="ReservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="RoomID" Type="Int32" />
-          <Property Name="CheckIn" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="StayLength" Type="Int32" Nullable="false" />
-          <Property Name="NightlyRate" Type="Decimal" Precision="15" Scale="2" />
-          <Property Name="DiscountID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="User" Relationship="ReserveItModel.FK_UserID" FromRole="Reservation" ToRole="User" />
-          <NavigationProperty Name="Room" Relationship="ReserveItModel.FK_RoomID" FromRole="Reservation" ToRole="Room" />
-        </EntityType>
-        <Association Name="FK_UserID">
-          <End Type="ReserveItModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ReserveItModel.Reservation" Role="Reservation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Reservation">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Manager">
           <Key>
             <PropertyRef Name="ManagerID" />
@@ -334,8 +308,8 @@
           <Property Name="RoomNumber" Type="Int32" Nullable="false" />
           <Property Name="CurrentRate" Type="Decimal" Nullable="false" Precision="15" Scale="2" />
           <NavigationProperty Name="Hotel" Relationship="ReserveItModel.FK_HotelID" FromRole="Room" ToRole="Hotel" />
-          <NavigationProperty Name="Reservations" Relationship="ReserveItModel.FK_RoomID" FromRole="Room" ToRole="Reservation" />
           <NavigationProperty Name="RoomType" Relationship="ReserveItModel.FK_RoomTypeID" FromRole="Room" ToRole="RoomType" />
+          <NavigationProperty Name="Reservations" Relationship="ReserveItModel.FK_RoomID" FromRole="Room" ToRole="Reservation" />
         </EntityType>
         <Association Name="FK_HotelID">
           <End Type="ReserveItModel.Hotel" Role="Hotel" Multiplicity="1">
@@ -348,18 +322,6 @@
             </Principal>
             <Dependent Role="Room">
               <PropertyRef Name="HotelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RoomID">
-          <End Type="ReserveItModel.Room" Role="Room" Multiplicity="0..1" />
-          <End Type="ReserveItModel.Reservation" Role="Reservation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Room">
-              <PropertyRef Name="RoomID" />
-            </Principal>
-            <Dependent Role="Reservation">
-              <PropertyRef Name="RoomID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -377,7 +339,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ReservationID" />
+          </Key>
+          <Property Name="ReservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="CheckIn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StayLength" Type="Int32" />
+          <Property Name="CheckOut" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NightlyRate" Type="Decimal" Precision="15" Scale="2" />
+          <NavigationProperty Name="Room" Relationship="ReserveItModel.FK_RoomID" FromRole="Reservation" ToRole="Room" />
+          <NavigationProperty Name="User" Relationship="ReserveItModel.FK_UserID" FromRole="Reservation" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_RoomID">
+          <End Type="ReserveItModel.Room" Role="Room" Multiplicity="0..1" />
+          <End Type="ReserveItModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID">
+          <End Type="ReserveItModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ReserveItModel.Reservation" Role="Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -432,19 +432,6 @@
           <FunctionImportMapping FunctionImportName="GetAvailableRoomTypes" FunctionName="ReserveItModel.Store.GetAvailableRoomTypes">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAvailableRoomID" FunctionName="ReserveItModel.Store.GetAvailableRoomID" />
-          <EntitySetMapping Name="Reservations">
-            <EntityTypeMapping TypeName="ReserveItModel.Reservation">
-              <MappingFragment StoreEntitySet="Reservations">
-                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
-                <ScalarProperty Name="NightlyRate" ColumnName="NightlyRate" />
-                <ScalarProperty Name="StayLength" ColumnName="StayLength" />
-                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Managers">
             <EntityTypeMapping TypeName="ReserveItModel.Manager">
               <MappingFragment StoreEntitySet="Managers">
@@ -463,6 +450,19 @@
                 <ScalarProperty Name="RoomTypeID" ColumnName="RoomTypeID" />
                 <ScalarProperty Name="HotelID" ColumnName="HotelID" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="ReserveItModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="NightlyRate" ColumnName="NightlyRate" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="StayLength" ColumnName="StayLength" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReservationID" ColumnName="ReservationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

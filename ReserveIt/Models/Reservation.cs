@@ -11,18 +11,30 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Reservation
     {
         public int ReservationID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> RoomID { get; set; }
+        
+        [Display(Name = "Check In Date")]
+        [DataType(DataType.Date)]
         public System.DateTime CheckIn { get; set; }
-        public int StayLength { get; set; }
+        
+        [Display(Name = "Length of Stay")]
+        public Nullable<int> StayLength { get; set; }
+        
+        [Display(Name = "Check In Date")]
+        [DataType(DataType.Date)]
+        public System.DateTime CheckOut { get; set; }
+        
+        [Display(Name = "Nightly Rate")]
+        [DataType(DataType.Currency)]
         public Nullable<decimal> NightlyRate { get; set; }
-        public string DiscountID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Room Room { get; set; }
+        public virtual User User { get; set; }
     }
 }

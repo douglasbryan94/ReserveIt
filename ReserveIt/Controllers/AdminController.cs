@@ -36,12 +36,11 @@ namespace ReserveIt.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReservationManagement(DateTime startDate, DateTime endDate)
+        public ActionResult ReservationManagement(Models.AdminReservationSearchData adminReservationSearchData)
         {
             if (Session["accessLevel"] != null)
             {
-                Models.AdminReservationSearchData data = new Models.AdminReservationSearchData(startDate, endDate);
-                return View(data);
+                return View(adminReservationSearchData);
             }
 
             return RedirectToAction("Index");

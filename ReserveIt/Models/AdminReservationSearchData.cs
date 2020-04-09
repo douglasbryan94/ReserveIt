@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,13 +8,12 @@ namespace ReserveIt.Models
 {
     public class AdminReservationSearchData
     {
-        public DateTime CheckIn { get; }
-        public DateTime CheckOut { get; }
+        [Display(Name = "Check In Date")]
+        [DataType(DataType.Date)]
+        public DateTime CheckIn { set;  get; }
 
-        public AdminReservationSearchData(DateTime start, DateTime end)
-        {
-            CheckIn = start;
-            CheckOut = end;
-        }
+        [Display(Name = "Check Out Date")]
+        [DataType(DataType.Date)]
+        public DateTime CheckOut { set; get; }
     }
 }

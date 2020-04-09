@@ -11,7 +11,8 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Room
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,12 +24,14 @@ namespace ReserveIt.Models
         public int RoomID { get; set; }
         public int HotelID { get; set; }
         public string RoomTypeID { get; set; }
+        
+        [Display(Name = "Hotel Room #")]
         public int RoomNumber { get; set; }
         public decimal CurrentRate { get; set; }
     
         public virtual Hotel Hotel { get; set; }
+        public virtual RoomType RoomType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservations { get; set; }
-        public virtual RoomType RoomType { get; set; }
     }
 }

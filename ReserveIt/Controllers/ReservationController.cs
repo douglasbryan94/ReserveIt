@@ -41,7 +41,6 @@ namespace ReserveIt.Controllers
                 {
                     TempData["checkIn"] = CheckInDate;
                     TempData["checkOut"] = CheckOutDate;
-                    TempData["lengthOfStay"] = (CheckOutDate - CheckInDate).Days;
 
                     TempData.Keep();
 
@@ -80,12 +79,10 @@ namespace ReserveIt.Controllers
                         UserID = (int)Session["userId"],
                         RoomID = (int)TempData["roomID"],
                         CheckIn = (DateTime)TempData["checkIn"],
-                        StayLength = (int)TempData["lengthOfStay"]
+                        CheckOut = (DateTime)TempData["checkOut"],
                     });
                     db.SaveChanges();
                 }
-                // Util.SQLConnection.SubmitReservation(TempData);
-                return RedirectToAction("Index", "Main", new { redirectedFromBooking = true });
             }
 
             return RedirectToAction("Index", "Home");
@@ -95,7 +92,7 @@ namespace ReserveIt.Controllers
         {
             if (Session["userID"] != null)
             {
-                return RedirectToAction("Index", "Main");
+                return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("Index", "Home");

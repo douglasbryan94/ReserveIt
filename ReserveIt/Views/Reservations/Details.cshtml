@@ -35,7 +35,15 @@
         </dd>
 
         <dt>
-            Nightly Rate
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </dt>
+
+        <dd>
+            @Model.CheckOut.ToShortDateString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NightlyRate)
         </dt>
 
         <dd>
@@ -51,16 +59,24 @@
         </dd>
 
         <dt>
+            Room Type
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.RoomType.RoomTypeDescription)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.User.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User.Email)
+            @Html.ActionLink(Model.User.Email, "Details", "Accounts", new { id = Model.UserID }, null)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }, new { @class = "btn btn-warning" })
     @Html.ActionLink("Back to List", "ReservationManagement", "Admin", null, new { @class = "btn btn-secondary" })
 </p>

@@ -169,7 +169,7 @@ namespace ReserveIt.Controllers
                 Reservation reservation = db.Reservations.Find(id);
                 db.Reservations.Remove(reservation);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ReservationManagement", "Admin");
             }
 
             return RedirectToAction("Index", "Admin");
