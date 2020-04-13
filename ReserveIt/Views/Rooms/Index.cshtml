@@ -5,11 +5,10 @@
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<br />
+<h4>@ViewBag.Title</h4>
+<br />
 
-<p>
-    @Html.ActionLink("Create New", "Create", new { hotelID = Model.First().HotelID })
-</p>
 <table class="table">
     <tr>
         <th>
@@ -24,23 +23,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomNumber)
-        </td>
-        <td>
-            $@Html.DisplayFor(modelItem => item.CurrentRate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomType.RoomTypeDescription)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RoomID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RoomID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RoomID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType.RoomTypeDescription)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RoomID }) |
+            </td>
+        </tr>
+    }
 
 </table>

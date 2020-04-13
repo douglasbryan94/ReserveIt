@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            Check In Date
+            @Html.DisplayNameFor(model => model.CheckIn)
         </dt>
 
         <dd>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            Length of Stay
+            @Html.DisplayNameFor(mode => Model.StayLength)
         </dt>
 
         <dd>
@@ -47,19 +47,11 @@
         </dt>
 
         <dd>
-            $@Html.DisplayFor(model => model.NightlyRate)
+            @Html.DisplayFor(model => model.NightlyRate)
         </dd>
 
         <dt>
-            Discount
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DiscountID)
-        </dd>
-
-        <dt>
-            Room Type
+            @Html.DisplayNameFor(model => model.Room.RoomType.RoomTypeDescription)
         </dt>
 
         <dd>

@@ -27,6 +27,9 @@ namespace ReserveIt.Models
         
         [Display(Name = "Hotel Room #")]
         public int RoomNumber { get; set; }
+        
+        [DataType(DataType.Currency)]
+        [Display(Name ="Current Rate")]
         public decimal CurrentRate { get; set; }
     
         public virtual Hotel Hotel { get; set; }

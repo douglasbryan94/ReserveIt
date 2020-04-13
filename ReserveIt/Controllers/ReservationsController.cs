@@ -77,7 +77,7 @@ namespace ReserveIt.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate,DiscountID")] Reservation reservation)
+        public ActionResult Create([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate")] Reservation reservation)
         {
             if (Session["accessLevel"] != null)
             {
@@ -121,7 +121,7 @@ namespace ReserveIt.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate,DiscountID")] Reservation reservation)
+        public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate")] Reservation reservation)
         {
             if (Session["accessLevel"] != null)
             {

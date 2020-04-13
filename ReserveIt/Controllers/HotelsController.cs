@@ -70,6 +70,14 @@ namespace ReserveIt.Controllers
             {
                 return HttpNotFound();
             }
+
+            var managerData = db.Managers.Select(m => new
+            {
+                ManagerID = m.ManagerID,
+                FullName = m.Firstname + " " + m.Lastname
+            }).ToList();
+
+            ViewBag.ManagerID = new SelectList(managerData, "ManagerID", "FullName");
             return View(hotel);
         }
 

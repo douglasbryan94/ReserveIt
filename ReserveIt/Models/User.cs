@@ -11,7 +11,8 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,17 +22,42 @@ namespace ReserveIt.Models
         }
     
         public int UserID { get; set; }
+        
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Display(Name = "Access Level")]
         public int UserLevel { get; set; }
+        
+        [Display(Name = "First Name")]
         public string Firstname { get; set; }
+
+        [Display(Name = "Middle Name")]
         public string Middlename { get; set; }
+
+        [Display(Name = "Last Name")]
         public string Lastname { get; set; }
+
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
+
+        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
+
+        [Display(Name = "State Address")]
         public string StateAddress { get; set; }
+
+        [Display(Name = "Country Address")]
         public string CountryAddress { get; set; }
+
+        [Display(Name = "ZIP Address")]
         public string ZIPAddress { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone")]
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

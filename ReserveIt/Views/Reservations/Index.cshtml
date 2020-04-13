@@ -46,7 +46,7 @@
         @item.CheckOut.ToShortDateString()
     </td>
     <td>
-        $@Html.DisplayFor(modelItem => item.NightlyRate)
+        @Html.DisplayFor(modelItem => item.NightlyRate)
     </td>
     <td>
         @Html.ActionLink(item.User.Email, "Details", "Accounts", new { id = item.UserID }, null)

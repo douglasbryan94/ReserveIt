@@ -11,7 +11,8 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Hotel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,13 +23,30 @@ namespace ReserveIt.Models
     
         public int HotelID { get; set; }
         public Nullable<int> ManagerID { get; set; }
+        
+        [Display(Name = "Max Capacity")]
         public int MaxCapacity { get; set; }
+        
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
+
+        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
+
+        [Display(Name = "State Address")]
         public string StateAddress { get; set; }
+
+        [Display(Name = "Country Address")]
         public string CountryAddress { get; set; }
+
+        [Display(Name = "ZIP Address")]
         public string ZIPAddress { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone")]
         public string Phone { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     
         public virtual Manager Manager { get; set; }
