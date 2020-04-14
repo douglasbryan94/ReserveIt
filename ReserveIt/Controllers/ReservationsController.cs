@@ -127,16 +127,20 @@ namespace ReserveIt.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Reservation previous = db.Reservations.Where(rs => rs.ReservationID == reservation.ReservationID).First();
+                    Reservation previous = db.Reservations.AsNoTracking().Where(rs => rs.ReservationID == reservation.ReservationID).Include(rs => rs.Room).First();
 
-                    foreach (DateTime day in Helpers.ReservationHelpers.EachDay(previous.CheckOut, reservation.CheckOut))
+                    for (DateTime date = previous.CheckOut; date.Date < reservation.CheckOut; date = date.AddDays(1))
                     {
-                        int i = 0;
+                        if (db.CheckAvailabilityOnDate(date, previous.Room.HotelID, reservation.RoomID).First() == 1)
+                        {
+                            return View("ReservationModificationFailure");
+                        }
                     }
+
                     db.Entry(reservation).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+
                 return View(reservation);
             }
 

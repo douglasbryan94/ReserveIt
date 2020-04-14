@@ -251,7 +251,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ReservationHelpers.cs" />
     <Compile Include="Models\AdminReservationSearchData.cs" />
     <Compile Include="Models\DTO\HotelShort.cs" />
     <Compile Include="Models\Hotel.cs">
@@ -335,6 +334,7 @@
     <Content Include="Views\Reservations\Details.cshtml" />
     <Content Include="Views\Reservations\Edit.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
+    <Content Include="Views\Reservations\ReservationModificationFailure.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
