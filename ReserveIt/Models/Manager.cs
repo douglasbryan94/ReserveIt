@@ -11,7 +11,8 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Manager
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +22,16 @@ namespace ReserveIt.Models
         }
     
         public int ManagerID { get; set; }
+        
+        [Required(ErrorMessage = "Please enter a First Name")]
+        [Display(Name = "First Name")]
         public string Firstname { get; set; }
+
+        [Display(Name = "Middle Name")]
         public string Middlename { get; set; }
+
+        [Required(ErrorMessage = "Please enter a Last Name")]
+        [Display(Name = "Last Name")]
         public string Lastname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

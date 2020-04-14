@@ -1,25 +1,13 @@
-﻿@{
+﻿@model IEnumerable<ReserveIt.Models.DTO.HotelShort>
+
+@{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
-
-    List<ReserveIt.Models.DTO.HotelShort> hotels = new List<ReserveIt.Models.DTO.HotelShort>();
-
-    using (ReserveIt.Models.ReserveItEntities ent = new ReserveIt.Models.ReserveItEntities())
-    {
-        hotels = ent.Hotels.Select(x => new ReserveIt.Models.DTO.HotelShort()
-        {
-            HotelID = x.HotelID,
-            StreetAddress = x.StreetAddress,
-            CityAddress = x.CityAddress,
-            StateAddress = x.StateAddress,
-            Description = x.Description
-        }).ToList();
-    }
 }
 
 <body>
     <div class="row" style="margin-left: 0px; margin-right: 0px;">
-        @foreach (ReserveIt.Models.DTO.HotelShort hotel in hotels)
+        @foreach (ReserveIt.Models.DTO.HotelShort hotel in Model)
         {
             using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Get))
             {

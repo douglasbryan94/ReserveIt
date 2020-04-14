@@ -1,4 +1,5 @@
-﻿
+﻿@model ReserveIt.Models.ReservationSearchData
+
 @{
     ViewBag.Title = "GetDateAndTime";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
@@ -18,22 +19,37 @@
             ].join('');
         };
 
-        var CheckInDate = document.forms["reservationForm"]["CheckInDate"].value;
+        var CheckInDate = document.forms["reservationForm"]["startDate"].value;
         var date = new Date(CheckInDate);
 
         date.setDate(date.getDate() + 2);
-        document.getElementById("checkOut").min = date.yyyymmdd();
+        document.getElementById("endDate").min = date.yyyymmdd();
     }
 </script>
 
 <body>
     <div class="jumbotron jumbotron-fluid">
-        <h1 class="display-4">Hotel Details - @(TempData["hotelStreetAddress"] + ", " + TempData["hotelCityAddress"])</h1>
+        <h1 class="display-4">Hotel Details - @Model.HotelStreetAddress, @Model.HotelCityAddress</h1>
     </div>
     @using (Html.BeginForm("SelectRoomType", "Reservation", FormMethod.Post, new { name = "reservationForm" }))
     {
-        <input type="date" id="checkIn" name="CheckInDate" onchange="checkInChosen(event);"><br>
-        <input type="date" id="checkOut" name="CheckOutDate"><br>
-        <input type="submit" name="submit" value="Search">
+        @Html.HiddenFor(model => model.HotelID)
+        @Html.HiddenFor(model => model.HotelStreetAddress)
+        @Html.HiddenFor(model => model.HotelCityAddress)
+        <table>
+            <tr>
+                <td style="padding-right: 15px;">
+                    @Html.LabelFor(model => model.Dates.CheckIn)
+                    @Html.EditorFor(model => model.Dates.CheckIn, new { htmlAttributes = new { @id = "startDate", @name = "startDate", @onchange = "checkInChosen(event);" } })
+                </td>
+                <td style="padding-right: 15px;">
+                    @Html.LabelFor(model => model.Dates.CheckOut)
+                    @Html.EditorFor(model => model.Dates.CheckOut, new { htmlAttributes = new { @id = "endDate", @name = "endDate" } })
+                </td>
+                <td>
+                    <input type="submit" name="submit" value="Search" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
     }
 </body>

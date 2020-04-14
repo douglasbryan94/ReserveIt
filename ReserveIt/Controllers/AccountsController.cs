@@ -48,12 +48,12 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Create
         public ActionResult Create()
         {
-            if (Session["accessLevel"] != null)
+            if (Session["accessLevel"] == null)
             {
                 return View();
             }
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Accounts/Create
@@ -63,7 +63,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
-            if (Session["accessLevel"] != null)
+            if (Session["accessLevel"] == null)
             {
                 if (ModelState.IsValid)
                 {
@@ -71,13 +71,13 @@ namespace ReserveIt.Controllers
                     user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
                     db.Users.Add(user);
                     db.SaveChanges();
-                    return RedirectToAction("UserManagement", "Admin");
+                    return RedirectToAction("Index", "Login");
                 }
 
                 return View(user);
             }
 
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Accounts/Edit/5

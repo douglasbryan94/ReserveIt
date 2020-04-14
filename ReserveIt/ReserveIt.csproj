@@ -262,6 +262,7 @@
     <Compile Include="Models\Reservation.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReservationSearchData.cs" />
     <Compile Include="Models\ReserveItDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -13,38 +13,35 @@ namespace ReserveIt.Controllers
         {
             if (Session["userID"] != null)
             {
-                Models.Hotel hotel = new Models.Hotel();
+                Models.ReservationSearchData data;
 
                 using (Models.ReserveItEntities db = new Models.ReserveItEntities())
                 {
-                    hotel = db.Hotels.Where(x => x.HotelID == hotelId).First();
+                    data = db.Hotels.Where(h => h.HotelID == hotelId).Select(h => new Models.ReservationSearchData()
+                    {
+                        HotelID = h.HotelID,
+                        HotelStreetAddress = h.StreetAddress,
+                        HotelCityAddress = h.CityAddress,
+                        HotelStateAddress = h.StateAddress
+                    }).First();
                 }
 
-                TempData["hotelID"] = hotel.HotelID;
-                TempData["hotelStreetAddress"] = hotel.StreetAddress;
-                TempData["hotelCityAddress"] = hotel.CityAddress;
-                TempData["hotelStateAddress"] = hotel.StateAddress;
-
-                TempData.Keep();
-
-                return View();
+                return View(data);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult SelectRoomType(DateTime CheckInDate, DateTime CheckOutDate)
+        public ActionResult SelectRoomType(Models.ReservationSearchData reservationSearchData)
         {
             if (Session["userID"] != null)
             {
-                if (CheckInDate != null && CheckOutDate != null)
+                if (reservationSearchData.Dates.CheckIn != null && reservationSearchData.Dates.CheckOut != null)
                 {
-                    TempData["checkIn"] = CheckInDate;
-                    TempData["checkOut"] = CheckOutDate;
-
+                    TempData["Model"] = reservationSearchData;
                     TempData.Keep();
 
-                    return View();
+                    return View(reservationSearchData);
                 }
             }
 
@@ -55,14 +52,18 @@ namespace ReserveIt.Controllers
         {
             if (Session["userID"] != null)
             {
+                Models.ReservationSearchData data = (Models.ReservationSearchData)TempData["Model"];
+                data.RoomTypeID = roomType;
+
                 using (Models.ReserveItEntities db = new Models.ReserveItEntities())
                 {
-                    TempData["roomID"] = db.GetAvailableRoomID((int)TempData["hotelID"], (DateTime)TempData["checkIn"], (DateTime)TempData["checkOut"], roomType).First();
+                    data.RoomID = (int)db.GetAvailableRoomID(data.HotelID, data.Dates.CheckIn, data.Dates.CheckOut, data.RoomTypeID).First();
                 }
 
+                TempData["Model"] = data;
                 TempData.Keep();
 
-                return View();
+                return View(data);
             }
 
             return RedirectToAction("Index", "Home");
@@ -74,16 +75,15 @@ namespace ReserveIt.Controllers
             {
                 using (Models.ReserveItEntities db = new Models.ReserveItEntities())
                 {
-                    db.Reservations.Add(new Models.Reservation()
-                    {
-                        UserID = (int)Session["userId"],
-                        RoomID = (int)TempData["roomID"],
-                        CheckIn = (DateTime)TempData["checkIn"],
-                        CheckOut = (DateTime)TempData["checkOut"],
-                    });
+                    Models.Reservation reservation = ((Models.ReservationSearchData)TempData["Model"]).ToEntity();
+                    reservation.UserID = (int)Session["userID"];
+
+                    db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
             }
+
+            TempData.Clear();
 
             return RedirectToAction("Index", "Home");
         }

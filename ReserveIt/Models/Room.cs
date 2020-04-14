@@ -21,6 +21,7 @@ namespace ReserveIt.Models
             this.Reservations = new HashSet<Reservation>();
         }
     
+        [Required(ErrorMessage = "Please provide a unique room ID")]
         public int RoomID { get; set; }
         public int HotelID { get; set; }
         public string RoomTypeID { get; set; }

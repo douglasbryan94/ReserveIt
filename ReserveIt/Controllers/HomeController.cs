@@ -11,7 +11,21 @@ namespace ReserveIt.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            List<Models.DTO.HotelShort> hotelShorts;
+
+            using (Models.ReserveItEntities ent = new ReserveIt.Models.ReserveItEntities())
+            {
+                hotelShorts = ent.Hotels.Select(x => new ReserveIt.Models.DTO.HotelShort()
+                {
+                    HotelID = x.HotelID,
+                    StreetAddress = x.StreetAddress,
+                    CityAddress = x.CityAddress,
+                    StateAddress = x.StateAddress,
+                    Description = x.Description
+                }).ToList();
+            }
+
+            return View(hotelShorts);
         }
     }
 }

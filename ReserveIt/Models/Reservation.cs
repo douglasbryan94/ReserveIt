@@ -18,14 +18,16 @@ namespace ReserveIt.Models
         public int ReservationID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> RoomID { get; set; }
-        
+
+        [Required(ErrorMessage = "Please specify a check in date")]
         [Display(Name = "Check In Date")]
         [DataType(DataType.Date)]
         public System.DateTime CheckIn { get; set; }
         
         [Display(Name = "Length of Stay")]
         public Nullable<int> StayLength { get; set; }
-        
+
+        [Required(ErrorMessage = "Please specify a check out date")]
         [Display(Name = "Check In Date")]
         [DataType(DataType.Date)]
         public System.DateTime CheckOut { get; set; }
