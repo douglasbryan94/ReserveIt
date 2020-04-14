@@ -121,18 +121,22 @@ namespace ReserveIt.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate")] Reservation reservation)
+        public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,CheckOut,StayLength,NightlyRate")] Reservation reservation)
         {
             if (Session["accessLevel"] != null)
             {
                 if (ModelState.IsValid)
                 {
+                    Reservation previous = db.Reservations.Where(rs => rs.ReservationID == reservation.ReservationID).First();
+
+                    foreach (DateTime day in Helpers.ReservationHelpers.EachDay(previous.CheckOut, reservation.CheckOut))
+                    {
+                        int i = 0;
+                    }
                     db.Entry(reservation).State = EntityState.Modified;
-                    var item = db.Entry(reservation).Property(x => x.CheckIn);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email", reservation.UserID);
                 return View(reservation);
             }
 

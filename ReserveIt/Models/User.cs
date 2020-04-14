@@ -11,8 +11,7 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,55 +21,17 @@ namespace ReserveIt.Models
         }
     
         public int UserID { get; set; }
-
-        [Required(ErrorMessage = "Please specify an Email Address")]
-        [EmailAddress(ErrorMessage = "Please specify an Email Address")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Please specify a password")]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "Please specify an Access Level")]
-        [Display(Name = "Access Level")]
         public int UserLevel { get; set; }
-
-        [Required(ErrorMessage = "Please specify a First Name")]
-        [Display(Name = "First Name")]
         public string Firstname { get; set; }
-
-        [Display(Name = "Middle Name")]
         public string Middlename { get; set; }
-
-        [Required(ErrorMessage = "Please specify a Last Name")]
-        [Display(Name = "Last Name")]
         public string Lastname { get; set; }
-
-        [Required(ErrorMessage = "Please specify a Street Address")]
-        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
-
-        [Required(ErrorMessage = "Please specify a City Address")]
-        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
-
-        [Required(ErrorMessage = "Please specify a State Address")]
-        [Display(Name = "State Address")]
         public string StateAddress { get; set; }
-
-        [Required(ErrorMessage = "Please specify a Country Address")]
-        [Display(Name = "Country Address")]
         public string CountryAddress { get; set; }
-
-        [Required(ErrorMessage = "Please specify a ZIP Address")]
-        [Display(Name = "ZIP Address")]
         public string ZIPAddress { get; set; }
-
-        [Required(ErrorMessage = "Please specify a Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [MinLength(10, ErrorMessage = "Please specify a Phone Number")]
-        [MaxLength(11, ErrorMessage = "Please specify a Phone Number")]
-        [Display(Name = "Phone")]
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

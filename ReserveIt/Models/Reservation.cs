@@ -23,7 +23,7 @@ namespace ReserveIt.Models
         [Display(Name = "Check In Date")]
         [DataType(DataType.Date)]
         public System.DateTime CheckIn { get; set; }
-        
+
         [Display(Name = "Length of Stay")]
         public Nullable<int> StayLength { get; set; }
 
@@ -31,11 +31,11 @@ namespace ReserveIt.Models
         [Display(Name = "Check In Date")]
         [DataType(DataType.Date)]
         public System.DateTime CheckOut { get; set; }
-        
+
         [Display(Name = "Nightly Rate")]
         [DataType(DataType.Currency)]
         public Nullable<decimal> NightlyRate { get; set; }
-    
+
         public virtual Room Room { get; set; }
         public virtual User User { get; set; }
     }

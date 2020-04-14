@@ -114,5 +114,22 @@ namespace ReserveIt.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetAvailableRoomID", hotelIdParameter, checkInParameter, checkOutParameter, roomTypeIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> CheckAvailabilityOnDate(Nullable<System.DateTime> newDate, Nullable<int> hotelID, Nullable<int> roomID)
+        {
+            var newDateParameter = newDate.HasValue ?
+                new ObjectParameter("newDate", newDate) :
+                new ObjectParameter("newDate", typeof(System.DateTime));
+    
+            var hotelIDParameter = hotelID.HasValue ?
+                new ObjectParameter("hotelID", hotelID) :
+                new ObjectParameter("hotelID", typeof(int));
+    
+            var roomIDParameter = roomID.HasValue ?
+                new ObjectParameter("roomID", roomID) :
+                new ObjectParameter("roomID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckAvailabilityOnDate", newDateParameter, hotelIDParameter, roomIDParameter);
+        }
     }
 }

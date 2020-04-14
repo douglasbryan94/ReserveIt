@@ -141,6 +141,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CheckAvailabilityOnDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="newDate" Type="date" Mode="In" />
+          <Parameter Name="hotelID" Type="int" Mode="In" />
+          <Parameter Name="roomID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetAvailableRoomID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="hotelId" Type="int" Mode="In" />
           <Parameter Name="checkIn" Type="date" Mode="In" />
@@ -230,6 +235,11 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
+          <FunctionImport Name="CheckAvailabilityOnDate" ReturnType="Collection(Int32)">
+            <Parameter Name="newDate" Mode="In" Type="DateTime" />
+            <Parameter Name="hotelID" Mode="In" Type="Int32" />
+            <Parameter Name="roomID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Hotel">
           <Key>
@@ -466,6 +476,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CheckAvailabilityOnDate" FunctionName="ReserveItModel.Store.CheckAvailabilityOnDate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -11,8 +11,7 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Hotel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,44 +20,15 @@ namespace ReserveIt.Models
             this.Rooms = new HashSet<Room>();
         }
     
-        [Required(ErrorMessage = "Please provide a unique hotel ID")]
         public int HotelID { get; set; }
-        
-        [Required(ErrorMessage = "Please provide a unique manager ID")] 
         public Nullable<int> ManagerID { get; set; }
-
-        [Required(ErrorMessage = "Please provide a maximum capacity")]
-        [Display(Name = "Max Capacity")]
         public int MaxCapacity { get; set; }
-
-
-        [Required(ErrorMessage = "Please provide a Street Address")]
-        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
-
-        [Required(ErrorMessage = "Please provide a City Address")]
-        [Display(Name = "City Address")]
         public string CityAddress { get; set; }
-
-        [Required(ErrorMessage = "Please provide a State Address")]
-        [Display(Name = "State Address")]
         public string StateAddress { get; set; }
-
-        [Required(ErrorMessage = "Please provide a Country Address")]
-        [Display(Name = "Country Address")]
         public string CountryAddress { get; set; }
-
-        [Required(ErrorMessage = "Please provide a ZIP Address")]
-        [Display(Name = "ZIP Address")]
         public string ZIPAddress { get; set; }
-
-        [Required(ErrorMessage = "Please provide a Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone")]
         public string Phone { get; set; }
-
-        [Required(ErrorMessage = "Please provide a description of the Hotel")]
-        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     
         public virtual Manager Manager { get; set; }

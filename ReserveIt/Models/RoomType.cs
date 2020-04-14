@@ -11,8 +11,7 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class RoomType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +21,7 @@ namespace ReserveIt.Models
         }
     
         public string RoomTypeID { get; set; }
-        
-        [Display(Name = "Room Type")]
         public string RoomTypeDescription { get; set; }
-        
-        [Display(Name = "Max Occupancy")]
         public int MaxOccupancy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
