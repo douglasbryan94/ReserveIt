@@ -59,6 +59,13 @@
           <Property Name="RoomTypeDescription" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="MaxOccupancy" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserLevels">
+          <Key>
+            <PropertyRef Name="UserLevelID" />
+          </Key>
+          <Property Name="UserLevelID" Type="int" Nullable="false" />
+          <Property Name="UserLevelDescription" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -141,6 +148,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserLevel">
+          <End Role="UserLevels" Type="Self.UserLevels" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLevels">
+              <PropertyRef Name="UserLevelID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserLevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="CheckAvailabilityOnDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="newDate" Type="date" Mode="In" />
           <Parameter Name="hotelID" Type="int" Mode="In" />
@@ -167,6 +186,7 @@
           <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomTypes" EntityType="Self.RoomTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLevels" EntityType="Self.UserLevels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_HotelID" Association="Self.FK_HotelID">
             <End Role="Hotels" EntitySet="Hotels" />
@@ -187,6 +207,10 @@
           <AssociationSet Name="FK_UserID" Association="Self.FK_UserID">
             <End Role="Users" EntitySet="Users" />
             <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLevel" Association="Self.FK_UserLevel">
+            <End Role="UserLevels" EntitySet="UserLevels" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -240,6 +264,11 @@
             <Parameter Name="hotelID" Mode="In" Type="Int32" />
             <Parameter Name="roomID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="UserLevels" EntityType="ReserveItModel.UserLevel" />
+          <AssociationSet Name="FK_UserLevel" Association="ReserveItModel.FK_UserLevel">
+            <End Role="UserLevel" EntitySet="UserLevels" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Hotel">
           <Key>
@@ -276,6 +305,7 @@
           <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Reservations" Relationship="ReserveItModel.FK_UserID" FromRole="User" ToRole="Reservation" />
+          <NavigationProperty Name="UserLevels" Relationship="ReserveItModel.FK_UserLevel" FromRole="User" ToRole="UserLevel" />
         </EntityType>
         <EntityType Name="RoomType">
           <Key>
@@ -387,6 +417,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="UserLevelID" />
+          </Key>
+          <Property Name="UserLevelID" Type="Int32" Nullable="false" />
+          <Property Name="UserLevelDescription" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="ReserveItModel.FK_UserLevel" FromRole="UserLevel" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserLevel">
+          <End Type="ReserveItModel.UserLevel" Role="UserLevel" Multiplicity="1" />
+          <End Type="ReserveItModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserLevel">
+              <PropertyRef Name="UserLevelID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserLevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -477,6 +527,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CheckAvailabilityOnDate" FunctionName="ReserveItModel.Store.CheckAvailabilityOnDate" />
+          <EntitySetMapping Name="UserLevels">
+            <EntityTypeMapping TypeName="ReserveItModel.UserLevel">
+              <MappingFragment StoreEntitySet="UserLevels">
+                <ScalarProperty Name="UserLevelDescription" ColumnName="UserLevelDescription" />
+                <ScalarProperty Name="UserLevelID" ColumnName="UserLevelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -259,6 +259,8 @@
     <Compile Include="Models\Manager.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Reservation.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
@@ -285,6 +287,9 @@
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>ReserveItDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserLevel.cs">
       <DependentUpon>ReserveItDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -323,7 +328,6 @@
     <Content Include="Views\Accounts\UserDetails.cshtml" />
     <Content Include="Views\Admin\ReservationManagement.cshtml" />
     <Content Include="Views\Admin\HotelManagement.cshtml" />
-    <Content Include="Views\Hotels\Create.cshtml" />
     <Content Include="Views\Hotels\Delete.cshtml" />
     <Content Include="Views\Hotels\Details.cshtml" />
     <Content Include="Views\Hotels\Edit.cshtml" />

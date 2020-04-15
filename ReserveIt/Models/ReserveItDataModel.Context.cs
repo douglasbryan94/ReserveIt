@@ -33,6 +33,7 @@ namespace ReserveIt.Models
         public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<UserLevel> UserLevels { get; set; }
     
         public virtual ObjectResult<User> VerifyUserLogin(string email, string pass)
         {

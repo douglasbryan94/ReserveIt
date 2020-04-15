@@ -16,6 +16,8 @@
         <EntityTypeShape EntityType="ReserveItModel.Reservation" Width="1.5" PointX="5.375" PointY="3" />
         <AssociationConnector Association="ReserveItModel.FK_RoomID" />
         <AssociationConnector Association="ReserveItModel.FK_UserID" />
+        <EntityTypeShape EntityType="ReserveItModel.UserLevel" Width="1.5" PointX="3.125" PointY="6.375" />
+        <AssociationConnector Association="ReserveItModel.FK_UserLevel" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

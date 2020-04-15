@@ -35,29 +35,6 @@ namespace ReserveIt.Controllers
             return View(hotel);
         }
 
-        // GET: Hotels/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Hotels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "HotelID,ManagerID,MaxCapacity,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone,Description")] Hotel hotel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Hotels.Add(hotel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(hotel);
-        }
-
         // GET: Hotels/Edit/5
         public ActionResult Edit(int? id)
         {

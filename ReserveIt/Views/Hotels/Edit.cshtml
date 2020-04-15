@@ -11,7 +11,7 @@
         
         <div class="form-horizontal">
             <br />
-            <h4>Editing Hotel: @Model.StreetAddress, @Model.CityAddress, @Model.StateAddress</h4>
+            <h4>Editing Hotel - @Model.StreetAddress, @Model.CityAddress, @Model.StateAddress</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.HotelID)
