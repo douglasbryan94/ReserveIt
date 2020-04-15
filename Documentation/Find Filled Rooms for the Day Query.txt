@@ -1,6 +1,0 @@
-SELECT
-	*
-FROM
-	rooms r
-LEFT JOIN reservations rs ON r.RoomID = rs.RoomID
-AND CURDATE() BETWEEN rs.CheckIn AND rs.CheckIn + INTERVAL rs.StayLength - 1 DAY
