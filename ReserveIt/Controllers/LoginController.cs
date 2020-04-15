@@ -12,7 +12,7 @@ namespace ReserveIt.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            if (Session["email"] == null)
+            if (Session["accessLevel"] == null)
             {
                 return View();
             }
@@ -22,50 +22,56 @@ namespace ReserveIt.Controllers
 
         public ActionResult Login(string email, string password)
         {
-            using (Models.ReserveItEntities ent = new Models.ReserveItEntities())
+            if (Session["accessLevel"] == null)
             {
-                Models.User result = ent.VerifyUserLogin(email, Convert.ToBase64String(Encoding.UTF8.GetBytes(password))).FirstOrDefault();
-
-                if (result != null)
+                using (Models.ReserveItEntities ent = new Models.ReserveItEntities())
                 {
-                    Session["userID"] = result.UserID;
-                    Session["email"] = result.Email;
-                    Session["password"] = result.Password;
-                    Session["accessLevel"] = result.UserLevel;
-                    Session["firstName"] = result.Firstname;
-                    Session["middleName"] = result.Middlename;
-                    Session["lastName"] = result.Lastname;
-                    Session["streetAddress"] = result.StreetAddress;
-                    Session["cityAddress"] = result.CityAddress;
-                    Session["stateAddress"] = result.StateAddress;
-                    Session["countryAddress"] = result.CountryAddress;
-                    Session["zipAddress"] = result.ZIPAddress;
-                    Session["phone"] = result.Phone;
+                    Models.User result = ent.VerifyUserLogin(email, Convert.ToBase64String(Encoding.UTF8.GetBytes(password))).FirstOrDefault();
+
+                    if (result != null)
+                    {
+                        Session["userID"] = result.UserID;
+                        Session["email"] = result.Email;
+                        Session["password"] = result.Password;
+                        Session["accessLevel"] = result.UserLevel;
+                        Session["firstName"] = result.Firstname;
+                        Session["middleName"] = result.Middlename;
+                        Session["lastName"] = result.Lastname;
+                        Session["streetAddress"] = result.StreetAddress;
+                        Session["cityAddress"] = result.CityAddress;
+                        Session["stateAddress"] = result.StateAddress;
+                        Session["countryAddress"] = result.CountryAddress;
+                        Session["zipAddress"] = result.ZIPAddress;
+                        Session["phone"] = result.Phone;
+                    }
                 }
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult AdminLogin(string email, string password)
         {
-            using (Models.ReserveItEntities ent = new Models.ReserveItEntities())
+            if (Session["accessLevel"] == null)
             {
-                Models.User result = ent.VerifyUserLogin(email, Convert.ToBase64String(Encoding.UTF8.GetBytes(password))).FirstOrDefault();
-
-                if (result != null)
+                using (Models.ReserveItEntities ent = new Models.ReserveItEntities())
                 {
-                    if (result.UserLevel == 1)
-                    {
-                        /*Session["userID"] = result.UserID;
-                        Session["email"] = result.Email;
-                        Session["password"] = result.Password;*/
-                        Session["accessLevel"] = result.UserLevel;
-                        /*Session["firstName"] = result.Firstname;
-                        Session["middleName"] = result.Middlename;
-                        Session["lastName"] = result.Lastname;*/
+                    Models.User result = ent.VerifyUserLogin(email, Convert.ToBase64String(Encoding.UTF8.GetBytes(password))).FirstOrDefault();
 
-                        return RedirectToAction("UserManagement", "Admin");
+                    if (result != null)
+                    {
+                        if (result.UserLevel == 1)
+                        {
+                            /*Session["userID"] = result.UserID;
+                            Session["email"] = result.Email;
+                            Session["password"] = result.Password;*/
+                            Session["accessLevel"] = result.UserLevel;
+                            /*Session["firstName"] = result.Firstname;
+                            Session["middleName"] = result.Middlename;
+                            Session["lastName"] = result.Lastname;*/
+
+                            return RedirectToAction("UserManagement", "Admin");
+                        }
                     }
                 }
             }
@@ -75,13 +81,19 @@ namespace ReserveIt.Controllers
 
         public ActionResult Logout()
         {
-            Session.Clear();
+            if (Session["accessLevel"] != null)
+            {
+                Session.Clear();
+            }
 
             return RedirectToAction("Index", "Home");
         }
         public ActionResult AdminLogout()
         {
-            Session.Clear();
+            if (Session["accessLevel"] != null)
+            {
+                Session.Clear();
+            }
 
             return RedirectToAction("Index", "Admin");
         }

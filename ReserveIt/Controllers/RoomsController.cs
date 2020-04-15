@@ -17,25 +17,35 @@ namespace ReserveIt.Controllers
         // GET: Rooms
         public ActionResult Index(int hotelID)
         {
-            var rooms = db.Rooms.Include(r => r.Hotel).Include(r => r.RoomType).Where(r => r.HotelID == hotelID);
-            return View(rooms.ToList());
+            if ((int)Session["accessLevel"] == 1)
+            {
+                var rooms = db.Rooms.Include(r => r.Hotel).Include(r => r.RoomType).Where(r => r.HotelID == hotelID);
+                return View(rooms.ToList());
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Rooms/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if ((int)Session["accessLevel"] == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Room room = db.Rooms.Find(id);
+                if (room == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.HotelID = new SelectList(db.Hotels, "HotelID", "StreetAddress", room.HotelID);
+                ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription", room.RoomTypeID);
+                return View(room);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.HotelID = new SelectList(db.Hotels, "HotelID", "StreetAddress", room.HotelID);
-            ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription", room.RoomTypeID);
-            return View(room);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Rooms/Edit/5

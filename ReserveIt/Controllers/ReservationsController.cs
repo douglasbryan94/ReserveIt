@@ -18,7 +18,7 @@ namespace ReserveIt.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 var reservations = db.Reservations.Include(r => r.User);
                 return View(reservations.ToList());
@@ -30,7 +30,7 @@ namespace ReserveIt.Controllers
         [HttpPost]
         public ActionResult Index(AdminReservationSearchData data)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 int stayLength = (data.CheckOut - data.CheckIn).Days;
                 var reservations = db.Reservations.Where(x => x.CheckIn == data.CheckIn && x.StayLength == stayLength).Include(r => r.User);
@@ -43,16 +43,16 @@ namespace ReserveIt.Controllers
         // GET: Reservations/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(reservation);
             }
@@ -62,7 +62,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult MyReservations()
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 int userID = (int)Session["userID"];
 
@@ -74,14 +74,13 @@ namespace ReserveIt.Controllers
 
         public ActionResult EditMyReservation(int? id)
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 if (id == null)
                 {
                     return RedirectToAction("MyReservations");
                 }
                 Reservation reservation = db.Reservations.Find(id);
-                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email", reservation.UserID);
                 return View(reservation);
             }
 
@@ -112,16 +111,16 @@ namespace ReserveIt.Controllers
 
         public ActionResult CancelMyReservation(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 2)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(reservation);
             }
@@ -134,7 +133,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CancelMyReservationConfirmed(int id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 2)
             {
                 Reservation reservation = db.Reservations.Find(id);
                 db.Reservations.Remove(reservation);
@@ -145,56 +144,20 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        // GET: Reservations/Create
-        public ActionResult Create()
-        {
-            if (Session["accessLevel"] != null)
-            {
-                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email");
-                return View();
-            }
-
-            return RedirectToAction("Index", "Admin");
-        }
-
-        // POST: Reservations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,StayLength,NightlyRate")] Reservation reservation)
-        {
-            if (Session["accessLevel"] != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Reservations.Add(reservation);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-
-                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email", reservation.UserID);
-                return View(reservation);
-            }
-
-            return RedirectToAction("Index", "Admin");
-        }
-
         // GET: Reservations/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
-                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email", reservation.UserID);
                 return View(reservation);
             }
 
@@ -208,7 +171,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,CheckOut,StayLength,NightlyRate")] Reservation reservation)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (ModelState.IsValid)
                 {
@@ -235,16 +198,16 @@ namespace ReserveIt.Controllers
         // GET: Reservations/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(reservation);
             }
@@ -257,7 +220,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 Reservation reservation = db.Reservations.Find(id);
                 db.Reservations.Remove(reservation);

@@ -17,22 +17,32 @@ namespace ReserveIt.Controllers
         // GET: Hotels
         public ActionResult Index()
         {
-            return View(db.Hotels.Include(x => x.Manager).ToList());
+            if ((int)Session["accessLevel"] == 1)
+            {
+                return View(db.Hotels.Include(x => x.Manager).ToList());
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Hotels/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if ((int)Session["accessLevel"] == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                Hotel hotel = db.Hotels.Find(id);
+                if (hotel == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(hotel);
             }
-            Hotel hotel = db.Hotels.Find(id);
-            if (hotel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hotel);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // GET: Hotels/Edit/5
@@ -40,17 +50,17 @@ namespace ReserveIt.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Hotel hotel = db.Hotels.Find(id);
             if (hotel == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
 
             var managerData = db.Managers.Select(m => new
             {
-                ManagerID = m.ManagerID,
+                m.ManagerID,
                 FullName = m.Firstname + " " + m.Lastname
             }).ToList();
 
@@ -77,16 +87,21 @@ namespace ReserveIt.Controllers
         // GET: Hotels/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if ((int)Session["accessLevel"] == 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                Hotel hotel = db.Hotels.Find(id);
+                if (hotel == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(hotel);
             }
-            Hotel hotel = db.Hotels.Find(id);
-            if (hotel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hotel);
+
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Hotels/Delete/5

@@ -16,7 +16,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult UserManagement()
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 return View();
             }
@@ -27,7 +27,7 @@ namespace ReserveIt.Controllers
         [HttpGet]
         public ActionResult ReservationManagement()
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 return View();
             }
@@ -38,7 +38,7 @@ namespace ReserveIt.Controllers
         [HttpPost]
         public ActionResult ReservationManagement(Models.AdminReservationSearchData adminReservationSearchData)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 return View(adminReservationSearchData);
             }
@@ -48,7 +48,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult HotelManagement()
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 return View();
             }

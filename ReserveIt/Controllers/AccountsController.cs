@@ -17,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 return View(db.Users.Where(x => x.UserLevel == 2).ToList());
             }
@@ -27,22 +27,27 @@ namespace ReserveIt.Controllers
 
         public ActionResult UserDetails()
         {
-            return View();
+            if ((int)Session["accessLevel"] == 2)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Login");
         }
 
         // GET: Accounts/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(user);
             }
@@ -53,7 +58,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Create
         public ActionResult Create()
         {
-            if (Session["accessLevel"] == null)
+            if ((int)Session["accessLevel"] == 2)
             {
                 return View();
             }
@@ -86,7 +91,7 @@ namespace ReserveIt.Controllers
                 return View(db.Users.Find(id));
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult ModifyContact(int? id)
@@ -96,22 +101,22 @@ namespace ReserveIt.Controllers
                 return View(db.Users.Find(id));
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
 
         // GET: Accounts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(user);
             }
@@ -126,33 +131,28 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
-            if (Session["accessLevel"] != null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("UserManagement", "Admin");
-                }
-                return View(user);
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("UserManagement", "Admin");
             }
-
-            return RedirectToAction("Index", "Admin");
+            return View(user);
         }
 
         // GET: Accounts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["accessLevel"] != null)
+            if ((int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Index");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("Index");
                 }
                 return View(user);
             }
@@ -165,14 +165,9 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["accessLevel"] != null)
-            {
-                User user = db.Users.Find(id);
-                db.Users.Remove(user);
-                db.SaveChanges();
-                return RedirectToAction("UserManagement", "Admin");
-            }
-
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
             return RedirectToAction("UserManagement", "Admin");
         }
 

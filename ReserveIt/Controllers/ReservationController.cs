@@ -11,7 +11,7 @@ namespace ReserveIt.Controllers
         // GET: Reservation
         public ActionResult GetDateAndTime(int hotelId)
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 Models.ReservationSearchData data;
 
@@ -34,7 +34,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult SelectRoomType(Models.ReservationSearchData reservationSearchData)
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 if (reservationSearchData.Dates.CheckIn != null && reservationSearchData.Dates.CheckOut != null)
                 {
@@ -50,7 +50,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult ConfirmReservation(string roomType)
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 Models.ReservationSearchData data = (Models.ReservationSearchData)TempData["Model"];
                 data.RoomTypeID = roomType;
@@ -72,7 +72,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult SubmitReservation()
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 using (Models.ReserveItEntities db = new Models.ReserveItEntities())
                 {
@@ -91,7 +91,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult CancelReservation()
         {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            if ((int)Session["accessLevel"] == 2)
             {
                 return RedirectToAction("Index", "Home");
             }
