@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "ReservationManagement";
+    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
+    @model ReserveIt.Models.AdminReservationSearchData
+}
+
+<script type="text/javascript">
+    function checkInChosen(e) {
+        Date.prototype.yyyymmdd = function () {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                "-",
+            (mm > 9 ? '' : '0') + mm,
+                "-",
+            (dd > 9 ? '' : '0') + dd
+            ].join('');
+        };
+
+        var CheckInDate = document.forms["reservationSearchForm"]["startDate"].value;
+        var date = new Date(CheckInDate);
+
+        date.setDate(date.getDate() + 2);
+        document.getElementById("endDate").min = date.yyyymmdd();
+    }
+</script>
+
+<body>
+    <div class="row" style="margin-left: 0px; margin-right: 0px; margin-top: 10px;">
+        @using (Html.BeginForm("ReservationManagement", "Admin", FormMethod.Post, new { name = "reservationSearchForm" }))
+        {
+            <table>
+                <tr>
+                    <td style="padding-right: 15px;">
+                        @Html.LabelFor(model => model.CheckIn)
+                        @Html.EditorFor(model => model.CheckIn, new { htmlAttributes = new { @id="startDate", @name="startDate", @onchange = "checkInChosen(event);" } })
+                    </td>
+                    <td style="padding-right: 15px;">
+                        @Html.LabelFor(model => model.CheckOut)
+                        @Html.EditorFor(model => model.CheckOut, new { htmlAttributes = new { @id = "endDate", @name = "endDate" } })
+                    </td>
+                    <td>
+                        <input type="submit" name="submit" value="Search" class="btn btn-success">
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <br />
+    @if (Model == null)
+    {
+        @Html.Action("Index", "Reservations")
+    }
+    else
+    {
+        @Html.Action("Index", "Reservations", new { data = Model })
+    }
+</body>

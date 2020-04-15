@@ -1,0 +1,92 @@
+﻿@model ReserveIt.Models.Hotel
+
+@{
+    ViewBag.Title = "Hotel Details";
+    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
+}
+
+<body>
+    <div>
+        <br />
+        <h4>Hotel Details of @Model.StreetAddress, @Model.CityAddress, @Model.StateAddress</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Manager
+            </dt>
+
+            <dd>
+                @Model.Manager.Firstname @Model.Manager.Lastname
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MaxCapacity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MaxCapacity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StreetAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StreetAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CityAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CityAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StateAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StateAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CountryAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CountryAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ZIPAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ZIPAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.HotelID }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Back to List", "HotelManagement", "Admin", null, new { @class = "btn btn-secondary" })
+    </p>
+</body>

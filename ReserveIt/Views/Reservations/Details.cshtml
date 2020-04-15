@@ -1,0 +1,74 @@
+﻿@model ReserveIt.Models.Reservation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
+}
+
+<div>
+    <br />
+    <h4>Reservation Details of ID: @Model.ReservationID</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Hotel Address
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.Hotel.StreetAddress), @Html.DisplayFor(model => model.Room.Hotel.CityAddress), @Html.DisplayFor(model => model.Room.Hotel.StateAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckIn)
+        </dt>
+
+        <dd>
+            @Model.CheckIn.ToShortDateString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(mode => Model.StayLength)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StayLength) nights
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </dt>
+
+        <dd>
+            @Model.CheckOut.ToShortDateString()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NightlyRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NightlyRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.RoomType.RoomTypeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.RoomType.RoomTypeDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.User.Email, "Details", "Accounts", new { id = Model.UserID }, null)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Back to List", "ReservationManagement", "Admin", null, new { @class = "btn btn-secondary" })
+</p>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ReserveIt.Models.Reservation>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<table class="table">
+    <tr>
+        <th>
+            Hotel Location
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.RoomNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StayLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NightlyRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Room.Hotel.StreetAddress), @Html.DisplayFor(modelItem => item.Room.Hotel.CityAddress), @Html.DisplayFor(modelItem => item.Room.Hotel.StateAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+    </td>
+    <td>
+        @item.CheckIn.ToShortDateString()
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StayLength)
+    </td>
+    <td>
+        @item.CheckOut.ToShortDateString()
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NightlyRate)
+    </td>
+    <td>
+        @Html.ActionLink(item.User.Email, "Details", "Accounts", new { id = item.UserID }, null)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ReservationID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ReservationID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ReservationID })
+    </td>
+</tr>
+    }
+
+</table>
