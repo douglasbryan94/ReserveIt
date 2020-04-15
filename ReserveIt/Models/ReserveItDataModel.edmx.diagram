@@ -13,7 +13,11 @@
         <EntityTypeShape EntityType="ReserveItModel.Room" Width="1.5" PointX="8.625" PointY="1.125" />
         <AssociationConnector Association="ReserveItModel.FK_HotelID" />
         <AssociationConnector Association="ReserveItModel.FK_RoomTypeID" />
+<<<<<<< Updated upstream
         <EntityTypeShape EntityType="ReserveItModel.Reservation" Width="1.5" PointX="5.375" PointY="3" />
+=======
+        <EntityTypeShape EntityType="ReserveItModel.Reservation" Width="1.5" PointX="5.375" PointY="3.25" />
+>>>>>>> Stashed changes
         <AssociationConnector Association="ReserveItModel.FK_RoomID" />
         <AssociationConnector Association="ReserveItModel.FK_UserID" />
         </Diagram>

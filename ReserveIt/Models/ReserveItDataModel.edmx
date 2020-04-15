@@ -226,6 +226,14 @@
             <End Role="RoomType" EntitySet="RoomTypes" />
             <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
+<<<<<<< Updated upstream
+=======
+          <FunctionImport Name="CheckAvailabilityOnDate" ReturnType="Collection(Int32)">
+            <Parameter Name="newDate" Mode="In" Type="DateTime" />
+            <Parameter Name="hotelID" Mode="In" Type="Int32" />
+            <Parameter Name="roomID" Mode="In" Type="Int32" />
+          </FunctionImport>
+>>>>>>> Stashed changes
           <EntitySet Name="Reservations" EntityType="ReserveItModel.Reservation" />
           <AssociationSet Name="FK_RoomID" Association="ReserveItModel.FK_RoomID">
             <End Role="Room" EntitySet="Rooms" />
@@ -235,11 +243,14 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
+<<<<<<< Updated upstream
           <FunctionImport Name="CheckAvailabilityOnDate" ReturnType="Collection(Int32)">
             <Parameter Name="newDate" Mode="In" Type="DateTime" />
             <Parameter Name="hotelID" Mode="In" Type="Int32" />
             <Parameter Name="roomID" Mode="In" Type="Int32" />
           </FunctionImport>
+=======
+>>>>>>> Stashed changes
           </EntityContainer>
         <EntityType Name="Hotel">
           <Key>
@@ -463,6 +474,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< Updated upstream
+=======
+          <FunctionImportMapping FunctionImportName="CheckAvailabilityOnDate" FunctionName="ReserveItModel.Store.CheckAvailabilityOnDate" />
+>>>>>>> Stashed changes
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="ReserveItModel.Reservation">
               <MappingFragment StoreEntitySet="Reservations">
@@ -476,7 +491,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< Updated upstream
           <FunctionImportMapping FunctionImportName="CheckAvailabilityOnDate" FunctionName="ReserveItModel.Store.CheckAvailabilityOnDate" />
+=======
+>>>>>>> Stashed changes
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

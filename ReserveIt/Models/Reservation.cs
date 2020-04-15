@@ -11,13 +11,18 @@ namespace ReserveIt.Models
 {
     using System;
     using System.Collections.Generic;
+<<<<<<< Updated upstream
     using System.ComponentModel.DataAnnotations;
 
+=======
+    
+>>>>>>> Stashed changes
     public partial class Reservation
     {
         public int ReservationID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> RoomID { get; set; }
+<<<<<<< Updated upstream
 
         [Required(ErrorMessage = "Please specify a check in date")]
         [Display(Name = "Check In Date")]
@@ -36,6 +41,13 @@ namespace ReserveIt.Models
         [DataType(DataType.Currency)]
         public Nullable<decimal> NightlyRate { get; set; }
 
+=======
+        public System.DateTime CheckIn { get; set; }
+        public Nullable<int> StayLength { get; set; }
+        public System.DateTime CheckOut { get; set; }
+        public Nullable<decimal> NightlyRate { get; set; }
+    
+>>>>>>> Stashed changes
         public virtual Room Room { get; set; }
         public virtual User User { get; set; }
     }
