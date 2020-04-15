@@ -1,0 +1,56 @@
+﻿@model ReserveIt.Models.User
+
+@{
+    ViewBag.Title = "ModifyContact";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <br />
+        <h4>Modify your Contact Information</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UserID)
+        @Html.HiddenFor(model => model.Password)
+        @Html.HiddenFor(model => model.UserLevel)
+        @Html.HiddenFor(model => model.Firstname)
+        @Html.HiddenFor(model => model.Middlename)
+        @Html.HiddenFor(model => model.Lastname)
+        @Html.HiddenFor(model => model.StreetAddress)
+        @Html.HiddenFor(model => model.CityAddress)
+        @Html.HiddenFor(model => model.StateAddress)
+        @Html.HiddenFor(model => model.CountryAddress)
+        @Html.HiddenFor(model => model.ZIPAddress)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to Details", "UserDetails", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

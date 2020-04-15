@@ -25,6 +25,11 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        public ActionResult UserDetails()
+        {
+            return View();
+        }
+
         // GET: Accounts/Details/5
         public ActionResult Details(int? id)
         {
@@ -63,18 +68,32 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
         {
-            if (Session["accessLevel"] == null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    user.UserLevel = 2;
-                    user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Login");
-                }
+                user.UserLevel = 2;
+                user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
 
-                return View(user);
+            return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult ModifyPersonal(int? id)
+        {
+            if ((int)Session["accessLevel"] == 2)
+            {
+                return View(db.Users.Find(id));
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ModifyContact(int? id)
+        {
+            if ((int)Session["accessLevel"] == 2)
+            {
+                return View(db.Users.Find(id));
             }
 
             return RedirectToAction("Index", "Home");

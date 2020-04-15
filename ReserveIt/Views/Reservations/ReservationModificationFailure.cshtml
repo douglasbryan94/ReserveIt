@@ -4,5 +4,14 @@
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
-<h2>ReservationModificationFailure</h2>
-
+<br />
+<h2>Sorry, the room has already been reserved on one or more of those specified dates</h2>
+<br />
+@if ((int)Session["accessLevel"] == 1)
+{
+    @Html.ActionLink("Go Back", "ReservationManagement", "Admin", null, new { @class = "btn btn-secondary" })
+}
+@if ((int)Session["accessLevel"] == 2)
+{
+@Html.ActionLink("Go Back", "MyReservations", "Reservations", null, new { @class = "btn btn-secondary" })
+}

@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 <script type="text/javascript">
     function checkInChosen(e) {
         Date.prototype.yyyymmdd = function () {
@@ -28,28 +32,30 @@
 </script>
 
 <body>
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" style="padding-bottom: 3rem;">
         <h1 class="display-4">Hotel Details - @Model.HotelStreetAddress, @Model.HotelCityAddress</h1>
-    </div>
-    @using (Html.BeginForm("SelectRoomType", "Reservation", FormMethod.Post, new { name = "reservationForm" }))
-    {
-        @Html.HiddenFor(model => model.HotelID)
-        @Html.HiddenFor(model => model.HotelStreetAddress)
-        @Html.HiddenFor(model => model.HotelCityAddress)
-        <table>
-            <tr>
-                <td style="padding-right: 15px;">
+        <p class="lead">Please enter your desired Check In and Check Out dates</p>
+        <hr class="my-4" />
+        @using (Html.BeginForm("SelectRoomType", "Reservation", FormMethod.Post, new { name = "reservationForm" }))
+        {
+            @Html.HiddenFor(model => model.HotelID)
+            @Html.HiddenFor(model => model.HotelStreetAddress)
+            @Html.HiddenFor(model => model.HotelCityAddress)
+            <div class="row" style="margin-left: 0px; margin-right: 0px;">
+                <div class="align-self-center" style="margin-left: 15px;">
                     @Html.LabelFor(model => model.Dates.CheckIn)
                     @Html.EditorFor(model => model.Dates.CheckIn, new { htmlAttributes = new { @id = "startDate", @name = "startDate", @onchange = "checkInChosen(event);" } })
-                </td>
-                <td style="padding-right: 15px;">
+                </div>
+                <p>@Html.ValidationMessageFor(model => model.Dates.CheckIn, "", new { @class = "text-danger" })</p>
+                <div class="align-self-center" style="margin-left: 15px;">
                     @Html.LabelFor(model => model.Dates.CheckOut)
                     @Html.EditorFor(model => model.Dates.CheckOut, new { htmlAttributes = new { @id = "endDate", @name = "endDate" } })
-                </td>
-                <td>
+                </div>
+                <p>@Html.ValidationMessageFor(model => model.Dates.CheckOut, "", new { @class = "text-danger" })</p>
+                <div class="align-self-center" style="margin-left: 15px;">
                     <input type="submit" name="submit" value="Search" class="btn btn-success">
-                </td>
-            </tr>
-        </table>
-    }
+                </div>
+            </div>
+        }
+    </div>
 </body>

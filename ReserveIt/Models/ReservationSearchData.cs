@@ -14,6 +14,7 @@ namespace ReserveIt.Models
         public string HotelStateAddress { set; get; }
         public ReservationDates Dates { set; get; }
         public string RoomTypeID { set; get; }
+        public string RoomTypeDescription { set; get; }
         public int RoomID { set; get; }
 
         public Reservation ToEntity()
@@ -31,10 +32,12 @@ namespace ReserveIt.Models
         {
             [Display(Name = "Check In Date")]
             [DataType(DataType.Date)]
+            [Required(ErrorMessage = "Please enter a Check In Date")]
             public DateTime CheckIn { get; set; }
 
             [Display(Name = "Check Out Date")]
             [DataType(DataType.Date)]
+            [Required(ErrorMessage = "Please enter a Check Out Date")]
             public DateTime CheckOut { get; set; }
         }
     }

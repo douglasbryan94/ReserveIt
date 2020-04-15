@@ -80,7 +80,7 @@ namespace ReserveIt.Models
         public Nullable<int> StayLength { get; set; }
 
         [Required(ErrorMessage = "Please specify a check out date")]
-        [Display(Name = "Check In Date")]
+        [Display(Name = "Check Out Date")]
         [DataType(DataType.Date)]
         public System.DateTime CheckOut { get; set; }
 
@@ -160,10 +160,11 @@ namespace ReserveIt.Models
         [Display(Name = "ZIP Address")]
         public string ZIPAddress { get; set; }
 
-        [Required(ErrorMessage = "Please specify a Phone Number")]
+        [Required(ErrorMessage = "Please specify a valid Phone Number")]
         [DataType(DataType.PhoneNumber)]
-        [MinLength(10, ErrorMessage = "Please specify a Phone Number")]
-        [MaxLength(11, ErrorMessage = "Please specify a Phone Number")]
+        [MinLength(14, ErrorMessage = "Please specify a valid Phone Number")]
+        [MaxLength(14, ErrorMessage = "Please specify a valid Phone Number")]
+        [RegularExpression("^1-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]$", ErrorMessage = "Please specify a valid Phone Number")]
         [Display(Name = "Phone")]
         public string Phone { get; set; }
     }

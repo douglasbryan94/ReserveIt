@@ -27,7 +27,7 @@
                 </div>
             </td>
             <td style="padding-left: 50px;">
-                @using (Html.BeginForm("ModifyPersonal", "AccountManagement", FormMethod.Post))
+                @using (Html.BeginForm("ModifyPersonal", "Accounts", new { id = Session["userID"] }))
                 {
                     <button class="btn btn-warning">Edit</button>
                 }
@@ -47,7 +47,7 @@
                 </div>
             </td>
             <td style="padding-left: 50px; padding-top: 50px;">
-                @using (Html.BeginForm("ModifyContact", "AccountManagement", FormMethod.Post))
+                @using (Html.BeginForm("ModifyContact", "Accounts", new { id = Session["userID"] }))
                 {
                     <button type="submit" class="btn btn-warning">Edit</button>
                 }

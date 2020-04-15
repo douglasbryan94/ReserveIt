@@ -12,6 +12,8 @@
         <p>
             Hotel Address: @Model.HotelStreetAddress, @Model.HotelCityAddress, @Model.HotelStateAddress
             <br />
+            Room Type: @Model.RoomTypeDescription
+            <br />
             Check In Date: @Model.Dates.CheckIn.ToShortDateString()
             <br />
             Check Out Date: @Model.Dates.CheckOut.ToShortDateString()
@@ -19,8 +21,8 @@
             Number of nights: @((Model.Dates.CheckOut - Model.Dates.CheckIn).Days)
         </p>
         <div class="row">
-            @Html.ActionLink("Confirm", "SubmitReservation", "Reservation", null, new { @class = "btn btn-success" }) 
-            @Html.ActionLink("Cancel", "CancelReservation", "Reservation", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Confirm", "SubmitReservation", "Reservation", null, new { @class = "btn btn-success" })  
+            @Html.ActionLink("Cancel", "CancelReservation", "Reservation", null, new { @class = "btn btn-danger", @style = "margin-left: 15px;" })
         </div>
     </div>
 </body>

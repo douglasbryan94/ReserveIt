@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ReserveIt.Models.Reservation>
+
+@{
+    ViewBag.Title = "PublicReservations";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </th>
+        <th>
+            Hotel Location
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NightlyRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room.RoomType.RoomTypeDescription)
+        </th>
+        <th>
+            Total Cost
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOut)
+            </td>
+            <td>
+                @item.Room.Hotel.StreetAddress, @item.Room.Hotel.CityAddress, @item.Room.Hotel.StateAddress
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NightlyRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.RoomType.RoomTypeDescription)
+            </td>
+            <td>
+                $@( Decimal.Multiply((decimal)item.NightlyRate, (decimal)item.StayLength) )
+            </td>
+            <td>
+                @Html.ActionLink("Extend Stay", "EditMyReservation", new { id = item.ReservationID }) |
+                @Html.ActionLink("Cancel Reservation", "CancelMyReservation", new { id = item.ReservationID })
+            </td>
+        </tr>
+    }
+
+</table>

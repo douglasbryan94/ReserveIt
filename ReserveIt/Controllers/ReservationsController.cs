@@ -60,6 +60,91 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        public ActionResult MyReservations()
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            {
+                int userID = (int)Session["userID"];
+
+                return View(db.Reservations.Where(rs => rs.UserID == userID).ToList());
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult EditMyReservation(int? id)
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
+            {
+                if (id == null)
+                {
+                    return RedirectToAction("MyReservations");
+                }
+                Reservation reservation = db.Reservations.Find(id);
+                ViewBag.UserID = new SelectList(db.Users, "UserID", "Email", reservation.UserID);
+                return View(reservation);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult EditMyReservation([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,CheckOut,StayLength,NightlyRate")] Reservation reservation)
+        {
+            if (ModelState.IsValid)
+            {
+                Reservation previous = db.Reservations.AsNoTracking().Where(rs => rs.ReservationID == reservation.ReservationID).Include(rs => rs.Room).First();
+
+                for (DateTime date = previous.CheckOut; date.Date < reservation.CheckOut; date = date.AddDays(1))
+                {
+                    if (db.CheckAvailabilityOnDate(date, previous.Room.HotelID, reservation.RoomID).First() == 1)
+                    {
+                        return View("ReservationModificationFailure");
+                    }
+                }
+
+                db.Entry(reservation).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("MyReservations");
+        }
+
+        public ActionResult CancelMyReservation(int? id)
+        {
+            if (Session["accessLevel"] != null)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Reservation reservation = db.Reservations.Find(id);
+                if (reservation == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(reservation);
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
+
+        // POST: Reservations/Delete/5
+        [HttpPost, ActionName("CancelMyReservation")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelMyReservationConfirmed(int id)
+        {
+            if (Session["accessLevel"] != null)
+            {
+                Reservation reservation = db.Reservations.Find(id);
+                db.Reservations.Remove(reservation);
+                db.SaveChanges();
+                return RedirectToAction("MyReservations");
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
+
         // GET: Reservations/Create
         public ActionResult Create()
         {

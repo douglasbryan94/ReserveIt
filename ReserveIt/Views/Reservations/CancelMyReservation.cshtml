@@ -1,0 +1,62 @@
+﻿@model ReserveIt.Models.Reservation
+
+@{
+    ViewBag.Title = "CancelMyReservation";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<div>
+    <br />
+    <h4>Are you sure you want to cancel this Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Hotel Locaiton
+        </dt>
+
+        <dd>
+            @Model.Room.Hotel.StreetAddress, @Model.Room.Hotel.CityAddress, @Model.Room.Hotel.StateAddress
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckOut)
+        </dd>
+
+        <dt>
+            Total Cost
+        </dt>
+
+        <dd>
+            $@(Decimal.Multiply((decimal)Model.NightlyRate, (decimal)Model.StayLength))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.RoomType.RoomTypeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.RoomType.RoomTypeDescription)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            @Html.ActionLink("Back to my Reservations", "MyReservations", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

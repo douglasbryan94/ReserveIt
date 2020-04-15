@@ -5,10 +5,14 @@
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <br />
         <h4>Editing Room #@Model.RoomNumber at @Model.Hotel.StreetAddress, @Model.Hotel.CityAddress, @Model.Hotel.StateAddress</h4>

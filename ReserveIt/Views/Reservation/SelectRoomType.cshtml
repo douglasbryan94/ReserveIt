@@ -8,7 +8,7 @@
 }
 
 <body>
-    @using (Html.BeginForm("ConfirmReservation", "Reservation", FormMethod.Get))
+    @using (Html.BeginForm("ConfirmReservation", "Reservation", FormMethod.Post))
     {
         if (availableRoomTypes.Count > 0)
         {

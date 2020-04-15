@@ -9,7 +9,7 @@
     <div class="row" style="margin-left: 0px; margin-right: 0px;">
         @foreach (ReserveIt.Models.DTO.HotelShort hotel in Model)
         {
-            using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Get))
+            using (Html.BeginForm("GetDateAndTime", "Reservation", FormMethod.Post))
             {
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
