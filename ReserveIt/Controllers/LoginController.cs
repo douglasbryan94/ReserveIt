@@ -10,6 +10,7 @@ namespace ReserveIt.Controllers
     public class LoginController : Controller
     {
         // GET: Login
+        [HttpGet]
         public ActionResult Index()
         {
             if (Session["accessLevel"] == null)
@@ -20,6 +21,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
         public ActionResult Login(string email, string password)
         {
             if (Session["accessLevel"] == null)
@@ -50,6 +52,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [HttpPost]
         public ActionResult AdminLogin(string email, string password)
         {
             if (Session["accessLevel"] == null)
@@ -62,13 +65,7 @@ namespace ReserveIt.Controllers
                     {
                         if (result.UserLevel == 1)
                         {
-                            /*Session["userID"] = result.UserID;
-                            Session["email"] = result.Email;
-                            Session["password"] = result.Password;*/
                             Session["accessLevel"] = result.UserLevel;
-                            /*Session["firstName"] = result.Firstname;
-                            Session["middleName"] = result.Middlename;
-                            Session["lastName"] = result.Lastname;*/
 
                             return RedirectToAction("UserManagement", "Admin");
                         }
@@ -79,6 +76,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        [HttpGet]
         public ActionResult Logout()
         {
             if (Session["accessLevel"] != null)
@@ -88,6 +86,8 @@ namespace ReserveIt.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
         public ActionResult AdminLogout()
         {
             if (Session["accessLevel"] != null)

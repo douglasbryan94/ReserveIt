@@ -15,6 +15,7 @@ namespace ReserveIt.Controllers
         private ReserveItEntities db = new ReserveItEntities();
 
         // GET: Accounts
+        [HttpGet]
         public ActionResult Index()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -25,6 +26,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        [HttpGet]
         public ActionResult UserDetails()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -36,6 +38,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Accounts/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -56,6 +59,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Accounts/Create
+        [HttpGet]
         public ActionResult Create()
         {
             if (Session["accessLevel"] == null)
@@ -84,6 +88,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [HttpGet]
         public ActionResult ModifyPersonal(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -116,6 +121,7 @@ namespace ReserveIt.Controllers
             return View(user);
         }
 
+        [HttpGet]
         public ActionResult ModifyContact(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -143,6 +149,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Accounts/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -179,6 +186,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Accounts/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

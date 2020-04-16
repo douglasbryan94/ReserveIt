@@ -15,6 +15,7 @@ namespace ReserveIt.Controllers
         private ReserveItEntities db = new ReserveItEntities();
 
         // GET: Hotels
+        [HttpGet]
         public ActionResult Index()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -26,6 +27,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Hotels/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -46,6 +48,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Hotels/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -90,6 +93,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Hotels/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

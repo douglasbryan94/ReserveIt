@@ -15,6 +15,7 @@ namespace ReserveIt.Controllers
         private ReserveItEntities db = new ReserveItEntities();
 
         // GET: Rooms
+        [HttpGet]
         public ActionResult Index(int hotelID)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -27,6 +28,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Rooms/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

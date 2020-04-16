@@ -9,6 +9,7 @@ namespace ReserveIt.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+        [HttpGet]
         public ActionResult Index()
         {
             List<Models.DTO.HotelShort> hotelShorts;

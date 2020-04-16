@@ -40,7 +40,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        // GET: Reservations/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -60,6 +60,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        [HttpGet]
         public ActionResult MyReservations()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -72,6 +73,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public ActionResult EditMyReservation(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -109,6 +111,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("MyReservations");
         }
 
+        [HttpGet]
         public ActionResult CancelMyReservation(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -145,6 +148,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Reservations/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -196,6 +200,7 @@ namespace ReserveIt.Controllers
         }
 
         // GET: Reservations/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

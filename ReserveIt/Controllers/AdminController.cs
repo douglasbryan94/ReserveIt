@@ -9,11 +9,13 @@ namespace ReserveIt.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult UserManagement()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
@@ -46,6 +48,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult HotelManagement()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

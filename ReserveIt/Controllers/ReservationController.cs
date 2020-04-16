@@ -8,7 +8,7 @@ namespace ReserveIt.Controllers
 {
     public class ReservationController : Controller
     {
-        // GET: Reservation
+        [HttpPost]
         public ActionResult GetDateAndTime(int hotelId)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -32,6 +32,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [HttpPost]
         public ActionResult SelectRoomType(Models.ReservationSearchData reservationSearchData)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -48,6 +49,7 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
         public ActionResult ConfirmReservation(string roomType)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
