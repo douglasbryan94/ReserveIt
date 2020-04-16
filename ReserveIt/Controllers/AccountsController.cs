@@ -17,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 return View(db.Users.Where(x => x.UserLevel == 2).ToList());
             }
@@ -27,7 +27,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult UserDetails()
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 return View();
             }
@@ -38,7 +38,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Details/5
         public ActionResult Details(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -58,7 +58,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Create
         public ActionResult Create()
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] == null)
             {
                 return View();
             }
@@ -86,7 +86,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult ModifyPersonal(int? id)
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 return View(db.Users.Find(id));
             }
@@ -96,7 +96,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult ModifyContact(int? id)
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 return View(db.Users.Find(id));
             }
@@ -107,7 +107,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -143,7 +143,7 @@ namespace ReserveIt.Controllers
         // GET: Accounts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {

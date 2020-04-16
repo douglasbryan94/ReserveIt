@@ -17,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Hotels
         public ActionResult Index()
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 return View(db.Hotels.Include(x => x.Manager).ToList());
             }
@@ -28,7 +28,7 @@ namespace ReserveIt.Controllers
         // GET: Hotels/Details/5
         public ActionResult Details(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -48,24 +48,29 @@ namespace ReserveIt.Controllers
         // GET: Hotels/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
-                return RedirectToAction("Index");
-            }
-            Hotel hotel = db.Hotels.Find(id);
-            if (hotel == null)
-            {
-                return RedirectToAction("Index");
+                if (id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                Hotel hotel = db.Hotels.Find(id);
+                if (hotel == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                var managerData = db.Managers.Select(m => new
+                {
+                    m.ManagerID,
+                    FullName = m.Firstname + " " + m.Lastname
+                }).ToList();
+
+                ViewBag.ManagerID = new SelectList(managerData, "ManagerID", "FullName");
+                return View(hotel);
             }
 
-            var managerData = db.Managers.Select(m => new
-            {
-                m.ManagerID,
-                FullName = m.Firstname + " " + m.Lastname
-            }).ToList();
-
-            ViewBag.ManagerID = new SelectList(managerData, "ManagerID", "FullName");
-            return View(hotel);
+            return RedirectToAction("Index", "Admin");
         }
 
         // POST: Hotels/Edit/5
@@ -87,7 +92,7 @@ namespace ReserveIt.Controllers
         // GET: Hotels/Delete/5
         public ActionResult Delete(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {

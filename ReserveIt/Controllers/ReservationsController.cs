@@ -18,7 +18,7 @@ namespace ReserveIt.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 var reservations = db.Reservations.Include(r => r.User);
                 return View(reservations.ToList());
@@ -30,7 +30,7 @@ namespace ReserveIt.Controllers
         [HttpPost]
         public ActionResult Index(AdminReservationSearchData data)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 int stayLength = (data.CheckOut - data.CheckIn).Days;
                 var reservations = db.Reservations.Where(x => x.CheckIn == data.CheckIn && x.StayLength == stayLength).Include(r => r.User);
@@ -43,7 +43,7 @@ namespace ReserveIt.Controllers
         // GET: Reservations/Details/5
         public ActionResult Details(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -62,7 +62,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult MyReservations()
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 int userID = (int)Session["userID"];
 
@@ -74,7 +74,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult EditMyReservation(int? id)
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 if (id == null)
                 {
@@ -111,7 +111,7 @@ namespace ReserveIt.Controllers
 
         public ActionResult CancelMyReservation(int? id)
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 if (id == null)
                 {
@@ -133,7 +133,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CancelMyReservationConfirmed(int id)
         {
-            if ((int)Session["accessLevel"] == 2)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
                 Reservation reservation = db.Reservations.Find(id);
                 db.Reservations.Remove(reservation);
@@ -147,7 +147,7 @@ namespace ReserveIt.Controllers
         // GET: Reservations/Edit/5
         public ActionResult Edit(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -171,7 +171,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ReservationID,UserID,RoomID,CheckIn,CheckOut,StayLength,NightlyRate")] Reservation reservation)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (ModelState.IsValid)
                 {
@@ -198,7 +198,7 @@ namespace ReserveIt.Controllers
         // GET: Reservations/Delete/5
         public ActionResult Delete(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
@@ -220,7 +220,7 @@ namespace ReserveIt.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 Reservation reservation = db.Reservations.Find(id);
                 db.Reservations.Remove(reservation);

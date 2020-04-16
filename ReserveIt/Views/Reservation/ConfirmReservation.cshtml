@@ -21,8 +21,14 @@
             Number of nights: @((Model.Dates.CheckOut - Model.Dates.CheckIn).Days)
         </p>
         <div class="row">
-            @Html.ActionLink("Confirm", "SubmitReservation", "Reservation", null, new { @class = "btn btn-success" })  
-            @Html.ActionLink("Cancel", "CancelReservation", "Reservation", null, new { @class = "btn btn-danger", @style = "margin-left: 15px;" })
+            @using (Html.BeginForm("SubmitReservation", "Reservation", FormMethod.Post))
+            {
+                <input type="submit" class="btn btn-success" value="Confirm" />
+            }
+            @using (Html.BeginForm("CancelReservation", "Reservation", FormMethod.Post))
+            {
+                <input type="submit" class="btn btn-danger" value="Cancel" />
+            }
         </div>
     </div>
 </body>

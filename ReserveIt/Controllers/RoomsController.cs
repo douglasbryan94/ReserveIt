@@ -17,7 +17,7 @@ namespace ReserveIt.Controllers
         // GET: Rooms
         public ActionResult Index(int hotelID)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 var rooms = db.Rooms.Include(r => r.Hotel).Include(r => r.RoomType).Where(r => r.HotelID == hotelID);
                 return View(rooms.ToList());
@@ -29,7 +29,7 @@ namespace ReserveIt.Controllers
         // GET: Rooms/Edit/5
         public ActionResult Edit(int? id)
         {
-            if ((int)Session["accessLevel"] == 1)
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 if (id == null)
                 {
