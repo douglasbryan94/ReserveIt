@@ -20,8 +20,8 @@ namespace ReserveIt.Controllers
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
-                var reservations = db.Reservations.Include(r => r.User);
-                return View(reservations.ToList());
+                List<Reservation> reservations = db.Reservations.Include(r => r.User).ToList();
+                return View(reservations);
             }
 
             return RedirectToAction("Index", "Admin");

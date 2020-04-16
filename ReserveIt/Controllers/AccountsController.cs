@@ -83,9 +83,10 @@ namespace ReserveIt.Controllers
                 user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
                 db.Users.Add(user);
                 db.SaveChanges();
+                return RedirectToAction("Index", "Login");
             }
 
-            return RedirectToAction("UserManagement", "Admin");
+            return RedirectToAction("Create");
         }
 
         [HttpGet]
