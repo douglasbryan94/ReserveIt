@@ -94,6 +94,28 @@ namespace ReserveIt.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [HttpPost]
+        public ActionResult ModifyPersonal([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Session["firstName"] = user.Firstname;
+                Session["middleName"] = user.Middlename;
+                Session["lastName"] = user.Lastname;
+                Session["streetAddress"] = user.StreetAddress;
+                Session["cityAddress"] = user.CityAddress;
+                Session["stateAddress"] = user.StateAddress;
+                Session["countryAddress"] = user.CountryAddress;
+                Session["zipAddress"] = user.ZIPAddress;
+
+                return RedirectToAction("UserDetails");
+            }
+            return View(user);
+        }
+
         public ActionResult ModifyContact(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
@@ -102,6 +124,22 @@ namespace ReserveIt.Controllers
             }
 
             return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult ModifyContact([Bind(Include = "UserID,Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Session["email"] = user.Email;
+                Session["phone"] = user.Phone;
+
+                return RedirectToAction("UserDetails");
+            }
+            return View(user);
         }
 
         // GET: Accounts/Edit/5
