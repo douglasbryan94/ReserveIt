@@ -8,6 +8,11 @@
 }
 
 <body>
+    <div class="jumbotron jumbotron-fluid" style="padding-bottom: 0rem; margin-bottom: 0px;">
+        <h1 class="display-4">Hotel - @Model.HotelStreetAddress, @Model.HotelCityAddress</h1>
+        <p class="lead">Please select a type of Room</p>
+        <hr class="my-4" />
+    </div>
     @using (Html.BeginForm("ConfirmReservation", "Reservation", FormMethod.Post))
     {
         if (availableRoomTypes.Count > 0)
@@ -21,7 +26,7 @@
         }
         else
         {
-
+            //If no rooms are available
         }
     }
 </body>

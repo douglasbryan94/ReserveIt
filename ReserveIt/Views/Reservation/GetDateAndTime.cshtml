@@ -33,7 +33,7 @@
 
 <body>
     <div class="jumbotron jumbotron-fluid" style="padding-bottom: 3rem;">
-        <h1 class="display-4">Hotel Details - @Model.HotelStreetAddress, @Model.HotelCityAddress</h1>
+        <h1 class="display-4">Hotel - @Model.HotelStreetAddress, @Model.HotelCityAddress</h1>
         <p class="lead">Please enter your desired Check In and Check Out dates</p>
         <hr class="my-4" />
         @using (Html.BeginForm("SelectRoomType", "Reservation", FormMethod.Post, new { name = "reservationForm" }))

@@ -45,12 +45,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 return View(user);
             }
@@ -85,7 +85,7 @@ namespace ReserveIt.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("UserManagement", "Admin");
         }
 
         [HttpGet]
@@ -156,12 +156,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 return View(user);
             }
@@ -182,6 +182,7 @@ namespace ReserveIt.Controllers
                 db.SaveChanges();
                 return RedirectToAction("UserManagement", "Admin");
             }
+
             return View(user);
         }
 
@@ -193,12 +194,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 User user = db.Users.Find(id);
                 if (user == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserManagement", "Admin");
                 }
                 return View(user);
             }

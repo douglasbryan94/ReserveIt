@@ -91,7 +91,7 @@ namespace ReserveIt.Controllers
             {
                 db.Entry(room).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { hotelID = room.HotelID });
             }
             ViewBag.HotelID = new SelectList(db.Hotels, "HotelID", "StreetAddress", room.HotelID);
             ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription", room.RoomTypeID);

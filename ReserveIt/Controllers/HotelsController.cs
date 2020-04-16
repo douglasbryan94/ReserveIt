@@ -64,12 +64,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
                 Hotel hotel = db.Hotels.Find(id);
                 if (hotel == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
                 return View(hotel);
             }
@@ -85,12 +85,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
                 Hotel hotel = db.Hotels.Find(id);
                 if (hotel == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
 
                 var managerData = db.Managers.Select(m => new
@@ -117,7 +117,7 @@ namespace ReserveIt.Controllers
             {
                 db.Entry(hotel).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("HotelManagement", "Admin");
             }
             return View(hotel);
         }
@@ -130,12 +130,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
                 Hotel hotel = db.Hotels.Find(id);
                 if (hotel == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HotelManagement", "Admin");
                 }
                 return View(hotel);
             }

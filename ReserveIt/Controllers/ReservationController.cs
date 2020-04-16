@@ -95,7 +95,7 @@ namespace ReserveIt.Controllers
                         "");
 
                     mail.Body = "<h1>Thank you for staying with us</h1>We hope you enjoy your stay. We try our utmost to ensure you have a comfortable and enjoyable experience.<br/><br/><h3>Find your Reservation Details below</h3>Reservation #: " + reservation.ReservationID +
-                        "<br/>Hotel Location: " + roomDetails.Hotel.StreetAddress + ", " + roomDetails.Hotel.CityAddress + ", " + roomDetails.Hotel.StateAddress + "<br/>Check In: " + reservation.CheckIn.ToShortDateString() +
+                        "<br/>Hotel Location: " + roomDetails.Hotel.StreetAddress + ", " + roomDetails.Hotel.CityAddress + ", " + roomDetails.Hotel.StateAddress + "<br/>Room #: " + roomDetails.RoomNumber + "<br />Check In: " + reservation.CheckIn.ToShortDateString() +
                         "<br/>Check Out: " + reservation.CheckOut.ToShortDateString() + "<br/>Direct Phone #: " + roomDetails.Hotel.Phone;
                     mail.IsBodyHtml = true;
                 }

@@ -47,12 +47,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 return View(reservation);
             }
@@ -118,12 +118,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MyReservations");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MyReservations");
                 }
                 return View(reservation);
             }
@@ -155,12 +155,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 return View(reservation);
             }
@@ -193,7 +193,7 @@ namespace ReserveIt.Controllers
                     db.SaveChanges();
                 }
 
-                return View(reservation);
+                return RedirectToAction("ReservationManagement", "Admin");
             }
 
             return RedirectToAction("Index", "Admin");
@@ -207,12 +207,12 @@ namespace ReserveIt.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 Reservation reservation = db.Reservations.Find(id);
                 if (reservation == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ReservationManagement", "Admin");
                 }
                 return View(reservation);
             }
