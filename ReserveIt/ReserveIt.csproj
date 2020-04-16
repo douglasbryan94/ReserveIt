@@ -352,6 +352,8 @@
     <Content Include="Views\Reservations\CancelMyReservation.cshtml" />
     <Content Include="Views\Accounts\ModifyPersonal.cshtml" />
     <Content Include="Views\Accounts\ModifyContact.cshtml" />
+    <Content Include="Views\Hotels\Create.cshtml" />
+    <Content Include="Views\Rooms\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

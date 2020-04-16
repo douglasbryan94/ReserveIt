@@ -25,6 +25,36 @@ namespace ReserveIt.Controllers
 
             return RedirectToAction("Index", "Admin");
         }
+        
+        [HttpGet]
+        public ActionResult Create()
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
+            {
+                var managerData = db.Managers.Select(m => new
+                {
+                    m.ManagerID,
+                    FullName = m.Firstname + " " + m.Lastname
+                }).ToList();
+
+                ViewBag.ManagerID = new SelectList(managerData, "ManagerID", "FullName");
+                return View();
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "ManagerID, MaxCapacity, StreetAddress, CityAddress, StateAddress, CountryAddress, ZIPAddress, Phone, Description", Exclude = "HotelID")] Hotel hotel)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Hotels.Add(hotel);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("HotelManagement", "Admin");
+        }
 
         // GET: Hotels/Details/5
         [HttpGet]

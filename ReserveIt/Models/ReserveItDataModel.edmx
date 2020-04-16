@@ -17,7 +17,7 @@
           <Property Name="StateAddress" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="CountryAddress" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ZIPAddress" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="14" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="700" Nullable="false" />
         </EntityType>
         <EntityType Name="Managers">
@@ -218,7 +218,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ReserveItModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ReserveItEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Hotels" EntityType="ReserveItModel.Hotel" />
           <EntitySet Name="Users" EntityType="ReserveItModel.User" />
           <FunctionImport Name="VerifyUserLogin" EntitySet="Users" ReturnType="Collection(ReserveItModel.User)">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -237,15 +236,7 @@
             <Parameter Name="roomTypeId" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Managers" EntityType="ReserveItModel.Manager" />
-          <AssociationSet Name="FK_ManagerID" Association="ReserveItModel.FK_ManagerID">
-            <End Role="Manager" EntitySet="Managers" />
-            <End Role="Hotel" EntitySet="Hotels" />
-          </AssociationSet>
           <EntitySet Name="Rooms" EntityType="ReserveItModel.Room" />
-          <AssociationSet Name="FK_HotelID" Association="ReserveItModel.FK_HotelID">
-            <End Role="Hotel" EntitySet="Hotels" />
-            <End Role="Room" EntitySet="Rooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomTypeID" Association="ReserveItModel.FK_RoomTypeID">
             <End Role="RoomType" EntitySet="RoomTypes" />
             <End Role="Room" EntitySet="Rooms" />
@@ -269,24 +260,16 @@
             <End Role="UserLevel" EntitySet="UserLevels" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Hotels" EntityType="ReserveItModel.Hotel" />
+          <AssociationSet Name="FK_HotelID" Association="ReserveItModel.FK_HotelID">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManagerID" Association="ReserveItModel.FK_ManagerID">
+            <End Role="Manager" EntitySet="Managers" />
+            <End Role="Hotel" EntitySet="Hotels" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Hotel">
-          <Key>
-            <PropertyRef Name="HotelID" />
-          </Key>
-          <Property Name="HotelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ManagerID" Type="Int32" />
-          <Property Name="MaxCapacity" Type="Int32" Nullable="false" />
-          <Property Name="StreetAddress" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CityAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StateAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CountryAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Manager" Relationship="ReserveItModel.FK_ManagerID" FromRole="Hotel" ToRole="Manager" />
-          <NavigationProperty Name="Rooms" Relationship="ReserveItModel.FK_HotelID" FromRole="Hotel" ToRole="Room" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
@@ -326,18 +309,6 @@
           <Property Name="Lastname" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Hotels" Relationship="ReserveItModel.FK_ManagerID" FromRole="Manager" ToRole="Hotel" />
         </EntityType>
-        <Association Name="FK_ManagerID">
-          <End Type="ReserveItModel.Manager" Role="Manager" Multiplicity="0..1" />
-          <End Type="ReserveItModel.Hotel" Role="Hotel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manager">
-              <PropertyRef Name="ManagerID" />
-            </Principal>
-            <Dependent Role="Hotel">
-              <PropertyRef Name="ManagerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Room">
           <Key>
             <PropertyRef Name="RoomID" />
@@ -347,24 +318,10 @@
           <Property Name="RoomTypeID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="RoomNumber" Type="Int32" Nullable="false" />
           <Property Name="CurrentRate" Type="Decimal" Nullable="false" Precision="15" Scale="2" />
-          <NavigationProperty Name="Hotel" Relationship="ReserveItModel.FK_HotelID" FromRole="Room" ToRole="Hotel" />
           <NavigationProperty Name="RoomType" Relationship="ReserveItModel.FK_RoomTypeID" FromRole="Room" ToRole="RoomType" />
           <NavigationProperty Name="Reservations" Relationship="ReserveItModel.FK_RoomID" FromRole="Room" ToRole="Reservation" />
+          <NavigationProperty Name="Hotel" Relationship="ReserveItModel.FK_HotelID" FromRole="Room" ToRole="Hotel" />
         </EntityType>
-        <Association Name="FK_HotelID">
-          <End Type="ReserveItModel.Hotel" Role="Hotel" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ReserveItModel.Room" Role="Room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hotel">
-              <PropertyRef Name="HotelID" />
-            </Principal>
-            <Dependent Role="Room">
-              <PropertyRef Name="HotelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoomTypeID">
           <End Type="ReserveItModel.RoomType" Role="RoomType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -437,28 +394,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="HotelID" />
+          </Key>
+          <Property Name="HotelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="MaxCapacity" Type="Int32" Nullable="false" />
+          <Property Name="StreetAddress" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CityAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StateAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CountryAddress" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ZIPAddress" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rooms" Relationship="ReserveItModel.FK_HotelID" FromRole="Hotel" ToRole="Room" />
+          <NavigationProperty Name="Manager" Relationship="ReserveItModel.FK_ManagerID" FromRole="Hotel" ToRole="Manager" />
+        </EntityType>
+        <Association Name="FK_HotelID">
+          <End Type="ReserveItModel.Hotel" Role="Hotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ReserveItModel.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="HotelID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="HotelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManagerID">
+          <End Type="ReserveItModel.Manager" Role="Manager" Multiplicity="0..1" />
+          <End Type="ReserveItModel.Hotel" Role="Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ReserveItModelStoreContainer" CdmEntityContainer="ReserveItEntities">
-          <EntitySetMapping Name="Hotels">
-            <EntityTypeMapping TypeName="ReserveItModel.Hotel">
-              <MappingFragment StoreEntitySet="Hotels">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="ZIPAddress" ColumnName="ZIPAddress" />
-                <ScalarProperty Name="CountryAddress" ColumnName="CountryAddress" />
-                <ScalarProperty Name="StateAddress" ColumnName="StateAddress" />
-                <ScalarProperty Name="CityAddress" ColumnName="CityAddress" />
-                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
-                <ScalarProperty Name="MaxCapacity" ColumnName="MaxCapacity" />
-                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
-                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ReserveItModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -532,6 +516,22 @@
               <MappingFragment StoreEntitySet="UserLevels">
                 <ScalarProperty Name="UserLevelDescription" ColumnName="UserLevelDescription" />
                 <ScalarProperty Name="UserLevelID" ColumnName="UserLevelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="ReserveItModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotels">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZIPAddress" ColumnName="ZIPAddress" />
+                <ScalarProperty Name="CountryAddress" ColumnName="CountryAddress" />
+                <ScalarProperty Name="StateAddress" ColumnName="StateAddress" />
+                <ScalarProperty Name="CityAddress" ColumnName="CityAddress" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="MaxCapacity" ColumnName="MaxCapacity" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

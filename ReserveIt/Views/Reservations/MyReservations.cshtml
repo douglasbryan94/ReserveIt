@@ -50,7 +50,7 @@
                 $@( Decimal.Multiply((decimal)item.NightlyRate, (decimal)item.StayLength) )
             </td>
             <td>
-                @Html.ActionLink("Extend Stay", "EditMyReservation", new { id = item.ReservationID }) |
+                @Html.ActionLink("Modify Stay", "EditMyReservation", new { id = item.ReservationID }) |
                 @Html.ActionLink("Cancel Reservation", "CancelMyReservation", new { id = item.ReservationID })
             </td>
         </tr>

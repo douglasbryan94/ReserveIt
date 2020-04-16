@@ -31,8 +31,8 @@ namespace ReserveIt.Models
         public string Phone { get; set; }
         public string Description { get; set; }
     
-        public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual Manager Manager { get; set; }
     }
 }

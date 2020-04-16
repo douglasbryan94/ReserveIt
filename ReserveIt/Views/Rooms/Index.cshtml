@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<ReserveIt.Models.Room>
 
 @{
-    ViewBag.Title = "Rooms at " + Model.First().Hotel.StreetAddress;
+    ReserveIt.Models.Hotel hotel = (ReserveIt.Models.Hotel)TempData["Hotel"];
+    ViewBag.Title = "Rooms at " + hotel.StreetAddress;
+    TempData.Clear();
     Layout = "~/Views/Shared/_AdminMasterLayout.cshtml";
 }
 
@@ -9,6 +11,9 @@
 <h4>@ViewBag.Title</h4>
 <br />
 
+<p>
+    @Html.ActionLink("Add New", "Create", "Rooms", new { id = hotel.HotelID }, new { @class = "btn btn-primary", @style = "margin-left: 15px;" })
+</p>
 <table class="table">
     <tr>
         <th>

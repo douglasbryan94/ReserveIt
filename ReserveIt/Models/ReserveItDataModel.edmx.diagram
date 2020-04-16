@@ -5,19 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="96e651d3c3b84cbbb707779a4e61dc5b" Name="Diagram1">
-        <EntityTypeShape EntityType="ReserveItModel.Hotel" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ReserveItModel.User" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ReserveItModel.RoomType" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="ReserveItModel.Manager" Width="1.5" PointX="0.75" PointY="5.375" />
-        <AssociationConnector Association="ReserveItModel.FK_ManagerID" />
         <EntityTypeShape EntityType="ReserveItModel.Room" Width="1.5" PointX="8.625" PointY="1.125" />
-        <AssociationConnector Association="ReserveItModel.FK_HotelID" />
         <AssociationConnector Association="ReserveItModel.FK_RoomTypeID" />
         <EntityTypeShape EntityType="ReserveItModel.Reservation" Width="1.5" PointX="5.375" PointY="3" />
         <AssociationConnector Association="ReserveItModel.FK_RoomID" />
         <AssociationConnector Association="ReserveItModel.FK_UserID" />
         <EntityTypeShape EntityType="ReserveItModel.UserLevel" Width="1.5" PointX="3.125" PointY="6.375" />
         <AssociationConnector Association="ReserveItModel.FK_UserLevel" />
+        <EntityTypeShape EntityType="ReserveItModel.Hotel" Width="1.5" PointX="0.5" PointY="1.25" />
+        <AssociationConnector Association="ReserveItModel.FK_HotelID" />
+        <AssociationConnector Association="ReserveItModel.FK_ManagerID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

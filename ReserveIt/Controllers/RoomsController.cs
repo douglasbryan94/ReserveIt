@@ -21,10 +21,40 @@ namespace ReserveIt.Controllers
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
                 var rooms = db.Rooms.Include(r => r.Hotel).Include(r => r.RoomType).Where(r => r.HotelID == hotelID);
+                TempData["Hotel"] = db.Hotels.Where(h => h.HotelID == hotelID).First();
+                TempData.Keep();
+
                 return View(rooms.ToList());
             }
 
             return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpGet]
+        public ActionResult Create(int id)
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
+            {
+                ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription");
+
+                int roomNumber = db.Rooms.Where(r => r.HotelID == id).Count() + 1;
+
+                return View(new Room() { HotelID = id, RoomNumber = roomNumber });
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "HotelID,RoomTypeID,RoomNumber,CurrentRate", Exclude = "RoomID")] Room room)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Rooms.Add(room);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", new { hotelID = room.HotelID });
         }
 
         // GET: Rooms/Edit/5

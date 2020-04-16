@@ -27,13 +27,13 @@ namespace ReserveIt.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<UserLevel> UserLevels { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
     
         public virtual ObjectResult<User> VerifyUserLogin(string email, string pass)
         {

@@ -26,9 +26,9 @@ namespace ReserveIt.Models
         public int RoomNumber { get; set; }
         public decimal CurrentRate { get; set; }
     
-        public virtual Hotel Hotel { get; set; }
         public virtual RoomType RoomType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual Hotel Hotel { get; set; }
     }
 }
