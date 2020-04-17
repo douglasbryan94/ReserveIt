@@ -28,12 +28,5 @@ namespace ReserveIt.Controllers
 
             return View(hotelShorts);
         }
-
-        public PartialViewResult Test()
-        {
-            using (Models.ReserveItEntities db = new Models.ReserveItEntities())
-            {
-                List<Models.Manager> managers = db.Managers.ToList();
-            }
-        }
     }
+}
