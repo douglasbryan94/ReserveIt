@@ -49,6 +49,17 @@ namespace ReserveIt.Controllers
         }
 
         [HttpGet]
+        public ActionResult ManagerManagement()
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public ActionResult HotelManagement()
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

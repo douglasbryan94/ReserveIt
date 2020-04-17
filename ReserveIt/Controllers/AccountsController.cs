@@ -20,7 +20,7 @@ namespace ReserveIt.Controllers
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
             {
-                return View(db.Users.Where(x => x.UserLevel == 2).ToList());
+                return View(db.Users.ToList());
             }
 
             return RedirectToAction("Index", "Admin");

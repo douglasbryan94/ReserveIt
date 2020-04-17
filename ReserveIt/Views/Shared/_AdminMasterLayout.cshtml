@@ -21,6 +21,9 @@
                 <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "ReservationManagement" ? "active" : "")">
                     @Html.ActionLink("Reservations", "ReservationManagement", "Admin", null, new { @class = "nav-link" })
                 </li>
+                <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "ManagerManagement" ? "active" : "")">
+                    @Html.ActionLink("Managers", "ManagerManagement", "Admin", null, new { @class = "nav-link" })
+                </li>
                 <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "HotelManagement" ? "active" : "")">
                     @Html.ActionLink("Hotels", "HotelManagement", "Admin", null, new { @class = "nav-link" })
                 </li>
