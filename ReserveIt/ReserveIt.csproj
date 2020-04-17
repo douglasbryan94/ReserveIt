@@ -361,6 +361,7 @@
     <Content Include="Views\Managers\Details.cshtml" />
     <Content Include="Views\Managers\Edit.cshtml" />
     <Content Include="Views\Managers\Index.cshtml" />
+    <Content Include="Views\Reservations\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
