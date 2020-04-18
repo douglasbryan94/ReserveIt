@@ -41,35 +41,6 @@ namespace ReserveIt.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
-        {
-            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
-            {
-                ViewBag.RoomTypeID = new SelectList(db.RoomTypes, "RoomTypeID", "RoomTypeDescription");
-                return View();
-            }
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        // POST: Accounts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,RoomID,CheckIn,CheckOut,StayLength,NightlyRate", Exclude = "ReservationID")] Reservation reservation)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Reservations.Add(reservation);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Login");
-            }
-
-            return RedirectToAction("Create");
-        }
-
-        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)

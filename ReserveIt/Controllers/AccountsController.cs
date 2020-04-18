@@ -90,6 +90,36 @@ namespace ReserveIt.Controllers
         }
 
         [HttpGet]
+        public ActionResult AdminCreate()
+        {
+            if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 1)
+            {
+                ViewBag.UserLevel = new SelectList(db.UserLevels, "UserLevelID", "UserLevelDescription");
+                return View();
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
+
+        // POST: Accounts/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AdminCreate([Bind(Include = "Email,Password,UserLevel,Firstname,Middlename,Lastname,StreetAddress,CityAddress,StateAddress,CountryAddress,ZIPAddress,Phone", Exclude = "UserID")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("UserManagement", "Admin");
+            }
+
+            return RedirectToAction("AdminCreate");
+        }
+
+        [HttpGet]
         public ActionResult ModifyPersonal(int? id)
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)

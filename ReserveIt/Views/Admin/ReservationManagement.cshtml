@@ -28,34 +28,25 @@
 </script>
 
 <body>
-    <div class="d-flex bd-highlight">
-        <div class="p-2 flex-shrink-1 bd-highlight">
-            <div class="d-flex align-items-center">
-                @Html.ActionLink("Create", "Create", "Reservations", null, new { @class = "btn btn-primary", @style = "margin-left: 15px;" })
-            </div>
-        </div>
-        <div class="p-2 w-100 bd-highlight">
-            <div class="d-flex justify-content-end">
-                @using (Html.BeginForm("ReservationManagement", "Admin", FormMethod.Post, new { name = "reservationSearchForm" }))
-                {
-                    <table>
-                        <tr>
-                            <td style="padding-right: 15px;">
-                                @Html.LabelFor(model => model.CheckIn)
-                                @Html.EditorFor(model => model.CheckIn, new { htmlAttributes = new { @id = "startDate", @name = "startDate", @onchange = "checkInChosen(event);" } })
-                            </td>
-                            <td style="padding-right: 15px;">
-                                @Html.LabelFor(model => model.CheckOut)
-                                @Html.EditorFor(model => model.CheckOut, new { htmlAttributes = new { @id = "endDate", @name = "endDate" } })
-                            </td>
-                            <td>
-                                <input type="submit" name="submit" value="Search" class="btn btn-success">
-                            </td>
-                        </tr>
-                    </table>
-                }
-            </div>
-        </div>
+    <div class="row" style="margin-left: 0px; margin-right: 0px; margin-top: 10px;">
+        @using (Html.BeginForm("ReservationManagement", "Admin", FormMethod.Post, new { name = "reservationSearchForm" }))
+        {
+            <table>
+                <tr>
+                    <td style="padding-right: 15px;">
+                        @Html.LabelFor(model => model.CheckIn)
+                        @Html.EditorFor(model => model.CheckIn, new { htmlAttributes = new { @id = "startDate", @name = "startDate", @onchange = "checkInChosen(event);" } })
+                    </td>
+                    <td style="padding-right: 15px;">
+                        @Html.LabelFor(model => model.CheckOut)
+                        @Html.EditorFor(model => model.CheckOut, new { htmlAttributes = new { @id = "endDate", @name = "endDate" } })
+                    </td>
+                    <td>
+                        <input type="submit" name="submit" value="Search" class="btn btn-success">
+                    </td>
+                </tr>
+            </table>
+        }
     </div>
 
     <br />
