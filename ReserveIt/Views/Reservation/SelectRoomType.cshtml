@@ -2,9 +2,6 @@
 @{
     ViewBag.Title = "Select Room Type";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
-
-    List<ReserveIt.Models.RoomType> availableRoomTypes = new ReserveIt.Models.ReserveItEntities().
-        GetAvailableRoomTypes(Model.HotelID, Model.Dates.CheckIn, Model.Dates.CheckOut).ToList();
 }
 
 <body>
@@ -15,10 +12,10 @@
     </div>
     @using (Html.BeginForm("ConfirmReservation", "Reservation", FormMethod.Post))
     {
-        if (availableRoomTypes.Count > 0)
+        if (Model.AvailableRoomTypes.Count > 0)
         {
             <div class="list-group">
-                @foreach (ReserveIt.Models.RoomType item in availableRoomTypes)
+                @foreach (ReserveIt.Models.RoomType item in Model.AvailableRoomTypes)
                 {
                     <button type="submit" name="roomType" class="list-group-item list-group-item-action" value="@item.RoomTypeID">@item.RoomTypeDescription</button>
                 }

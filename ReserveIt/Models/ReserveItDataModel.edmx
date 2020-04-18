@@ -165,6 +165,11 @@
           <Parameter Name="hotelID" Type="int" Mode="In" />
           <Parameter Name="roomID" Type="int" Mode="In" />
         </Function>
+        <Function Name="CheckRoomAvailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="checkIn" Type="date" Mode="In" />
+          <Parameter Name="checkOut" Type="date" Mode="In" />
+          <Parameter Name="roomId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetAvailableRoomID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="hotelId" Type="int" Mode="In" />
           <Parameter Name="checkIn" Type="date" Mode="In" />
@@ -269,6 +274,11 @@
             <End Role="Manager" EntitySet="Managers" />
             <End Role="Hotel" EntitySet="Hotels" />
           </AssociationSet>
+          <FunctionImport Name="CheckRoomAvailability" ReturnType="Collection(Int32)">
+            <Parameter Name="checkIn" Mode="In" Type="DateTime" />
+            <Parameter Name="checkOut" Mode="In" Type="DateTime" />
+            <Parameter Name="roomId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -535,6 +545,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CheckRoomAvailability" FunctionName="ReserveItModel.Store.CheckRoomAvailability" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

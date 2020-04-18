@@ -16,6 +16,13 @@ namespace ReserveIt.Models
         public string RoomTypeID { set; get; }
         public string RoomTypeDescription { set; get; }
         public int RoomID { set; get; }
+        public List<Room> AvailableRooms { set; get; }
+        public List<RoomType> AvailableRoomTypes { set; get; }
+
+        public ReservationSearchData()
+        {
+            AvailableRooms = new List<Room>();
+        }
 
         public Reservation ToEntity()
         {

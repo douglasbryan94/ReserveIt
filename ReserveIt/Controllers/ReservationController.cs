@@ -37,13 +37,27 @@ namespace ReserveIt.Controllers
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
-                if (reservationSearchData.Dates.CheckIn != null && reservationSearchData.Dates.CheckOut != null)
-                {
-                    TempData["Model"] = reservationSearchData;
-                    TempData.Keep();
+                List<Models.Room> rooms = new Models.ReserveItEntities().Rooms.Where(r => r.HotelID == reservationSearchData.HotelID).ToList();
 
-                    return View(reservationSearchData);
+                foreach (Models.Room item in rooms)
+                {
+                    using (Models.ReserveItEntities db = new Models.ReserveItEntities())
+                    {
+                        int response = (int)db.CheckRoomAvailability(reservationSearchData.Dates.CheckIn, reservationSearchData.Dates.CheckOut, item.RoomID).First();
+
+                        if (response == 0)
+                        {
+                            reservationSearchData.AvailableRooms.Add(item);
+                        }
+                    }
                 }
+
+                reservationSearchData.AvailableRoomTypes = reservationSearchData.AvailableRooms.Select(r => r.RoomType).Distinct().ToList();
+
+                TempData["Model"] = reservationSearchData;
+                TempData.Keep();
+
+                return View(reservationSearchData);
             }
 
             return RedirectToAction("Index", "Home");
@@ -57,11 +71,9 @@ namespace ReserveIt.Controllers
                 Models.ReservationSearchData data = (Models.ReservationSearchData)TempData["Model"];
                 data.RoomTypeID = roomType;
 
-                using (Models.ReserveItEntities db = new Models.ReserveItEntities())
-                {
-                    data.RoomID = (int)db.GetAvailableRoomID(data.HotelID, data.Dates.CheckIn, data.Dates.CheckOut, data.RoomTypeID).First();
-                    data.RoomTypeDescription = db.Rooms.Find(data.RoomID).RoomType.RoomTypeDescription;
-                }
+                data.RoomID = data.AvailableRooms.Where(r => r.RoomTypeID == roomType).First().RoomID;
+
+                data.RoomTypeDescription = data.AvailableRooms.Where(ar => ar.RoomID == data.RoomID).Select(rs => rs.RoomType.RoomTypeDescription).First();
 
                 TempData["Model"] = data;
                 TempData.Keep();
@@ -77,11 +89,12 @@ namespace ReserveIt.Controllers
         {
             if (Session["accessLevel"] != null && (int)Session["accessLevel"] == 2)
             {
+                Models.Reservation reservation = ((Models.ReservationSearchData)TempData["Model"]).ToEntity();
                 System.Net.Mail.MailMessage mail;
 
                 using (Models.ReserveItEntities db = new Models.ReserveItEntities())
                 {
-                    Models.Reservation reservation = ((Models.ReservationSearchData)TempData["Model"]).ToEntity();
+                    
                     Models.Room roomDetails = db.Rooms.AsNoTracking().Where(r => r.RoomID == reservation.RoomID).First();
                     reservation.UserID = (int)Session["userID"];
 
