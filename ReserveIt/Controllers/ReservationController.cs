@@ -71,9 +71,9 @@ namespace ReserveIt.Controllers
                 Models.ReservationSearchData data = (Models.ReservationSearchData)TempData["Model"];
                 data.RoomTypeID = roomType;
 
-                data.RoomID = data.AvailableRooms.Where(r => r.RoomTypeID == roomType).First().RoomID;
+                data.ReserveRoom = data.AvailableRooms.Where(r => r.RoomTypeID == roomType).First();
 
-                data.RoomTypeDescription = data.AvailableRooms.Where(ar => ar.RoomID == data.RoomID).Select(rs => rs.RoomType.RoomTypeDescription).First();
+                data.RoomTypeDescription = data.AvailableRooms.Where(ar => ar.RoomID == data.ReserveRoom.RoomID).Select(rs => rs.RoomType.RoomTypeDescription).First();
 
                 TempData["Model"] = data;
                 TempData.Keep();

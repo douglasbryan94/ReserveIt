@@ -19,6 +19,8 @@
             Check Out Date: @Model.Dates.CheckOut.ToShortDateString()
             <br />
             Number of nights: @((Model.Dates.CheckOut - Model.Dates.CheckIn).Days)
+            <br />
+            Total Cost: $@(Model.ReserveRoom.CurrentRate * ((Model.Dates.CheckOut - Model.Dates.CheckIn).Days))
         </p>
         <div class="row">
             @using (Html.BeginForm("SubmitReservation", "Reservation", FormMethod.Post))

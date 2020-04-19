@@ -15,7 +15,7 @@ namespace ReserveIt.Models
         public ReservationDates Dates { set; get; }
         public string RoomTypeID { set; get; }
         public string RoomTypeDescription { set; get; }
-        public int RoomID { set; get; }
+        public Room ReserveRoom { set; get; }
         public List<Room> AvailableRooms { set; get; }
         public List<RoomType> AvailableRoomTypes { set; get; }
 
@@ -28,7 +28,7 @@ namespace ReserveIt.Models
         {
             Reservation temp = new Reservation();
 
-            temp.RoomID = RoomID;
+            temp.RoomID = ReserveRoom.RoomID;
             temp.CheckIn = Dates.CheckIn;
             temp.CheckOut = Dates.CheckOut;
 
