@@ -22,20 +22,8 @@ namespace ReserveIt.Models
     public partial class RoomType { }
 
     [MetadataType(typeof(UserMetadata))]
-    public partial class User : IValidatableObject
-    {
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            using (Models.ReserveItEntities db = new ReserveItEntities())
-            {
-                if (db.Users.Any(u => u.Email == Email))
-                {
-                    yield return new ValidationResult("A user with that email already exists", new[] { "Email" });
-                }
-            }
-        }
-    }
-
+    public partial class User { }
+    
     [MetadataType(typeof(UserLevelMetadata))]
     public partial class UserLevel { }
 }
